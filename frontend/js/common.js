@@ -15,7 +15,7 @@ const IS_LOCAL_DEV = (
 const API_BASE_URL = window.__API_URL__ || (
     IS_LOCAL_DEV
         ? 'http://127.0.0.1:5000/api'
-        : 'https://campus-complaint-backend.onrender.com/api'
+        : 'https://campus-complaint-backend-yi51.onrender.com/api'
 );
 
 // Get stored JWT token
