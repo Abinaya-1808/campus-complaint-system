@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Notifications - Campus Complaint System</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/complaint.css">
+</head>
+
+<body class="complaint-page">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+
+        <div class="logo">
+            Campus Complaint System
+        </div>
+
+        <div class="nav-links">
+            <a href="student-dashboard.html">Dashboard</a>
+            <a href="my-complaints.html">My Complaints</a>
+            <a href="notifications.html" class="notification-nav active">
+                🔔 Notifications
+                <span id="notificationBadge" class="notification-badge hidden">0</span>
+            </a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </div>
+
+    </nav>
+
+
+    <!-- Main -->
+    <main class="notification-container">
+
+        <div class="notification-header">
+
+            <div>
+                <p class="notification-label">
+                    STUDENT PANEL
+                </p>
+
+                <h1>Notifications 🔔</h1>
+
+                <p>
+                    Stay updated about your complaints.
+                </p>
+            </div>
+
+            <button
+                id="markAllReadBtn"
+                class="mark-read-btn"
+            >
+                Mark All as Read
+            </button>
+
+        </div>
+
+
+        <!-- Notification Count -->
+
+        <div class="notification-summary">
+
+            <div>
+                <span>Total Notifications</span>
+                <strong id="totalNotifications">0</strong>
+            </div>
+
+            <div>
+                <span>Unread</span>
+                <strong id="unreadNotifications">0</strong>
+            </div>
+
+        </div>
+
+
+        <!-- Notifications -->
+
+        <section class="notifications-section">
+
+            <div id="notificationsList">
+
+                <!-- Notifications will appear here -->
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+
+    <footer class="footer">
+
+        <p>
+            © 2026 Campus Complaint System. All rights reserved.
+        </p>
+
+    </footer>
+
+
+    <script src="../js/common.js"></script>
+    <script src="../js/notifications.js"></script>
+
+</body>
+
+</html>

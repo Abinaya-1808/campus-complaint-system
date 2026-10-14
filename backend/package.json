@@ -1,0 +1,34 @@
+{
+  "name": "campuscomplaintsystembackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "node src/scripts/runTests.js",
+    "seed:admin": "node src/scripts/seedAdmin.js",
+    "test:db": "node src/scripts/testConnection.js",
+    "test:e2e": "node src/scripts/runAtlasE2ETest.js",
+    "clean:testdata": "node src/scripts/cleanupTestData.js",
+    "test:browser": "node src/scripts/runPlaywrightBrowserTest.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.6",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.11.1",
+    "morgan": "^1.12.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "playwright": "^1.64.0"
+  }
+}

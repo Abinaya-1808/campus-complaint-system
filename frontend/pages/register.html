@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register - Campus Grievance System</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/auth.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+
+        <div class="logo">
+            Campus<span>Grievance</span>
+        </div>
+
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="register.html" class="active nav-btn">Register</a>
+        </nav>
+
+    </header>
+
+
+    <!-- Registration Section -->
+    <main class="auth-page">
+
+        <div class="auth-container">
+
+            <div class="auth-header">
+
+                <p class="auth-tag">CREATE ACCOUNT</p>
+
+                <h1>Student Registration</h1>
+
+                <p>
+                    Create your account to submit and track
+                    Campus Complaint Systems.
+                </p>
+
+            </div>
+
+
+            <form id="registerForm">
+
+                <!-- Full Name -->
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Register Number -->
+                <div class="form-group">
+
+                    <label for="registerNumber">
+                        Register Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="registerNumber"
+                        placeholder="Enter your register number"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Email -->
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Department -->
+                <div class="form-group">
+
+                    <label for="department">
+                        Department
+                    </label>
+
+                    <select id="department" required>
+
+                        <option value="">
+                            Select Department
+                        </option>
+
+                        <option value="AI&DS">
+                            Artificial Intelligence & Data Science
+                        </option>
+
+                        <option value="CSE">
+                            Computer Science Engineering
+                        </option>
+
+                        <option value="ECE">
+                            Electronics & Communication Engineering
+                        </option>
+
+                        <option value="EEE">
+                            Electrical & Electronics Engineering
+                        </option>
+
+                        <option value="IT">
+                            Information Technology
+                        </option>
+
+                        <option value="MECH">
+                            Mechanical Engineering
+                        </option>
+
+                        <option value="CIVIL">
+                            Civil Engineering
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Year -->
+                <div class="form-group">
+
+                    <label for="year">
+                        Year of Study
+                    </label>
+
+                    <select id="year" required>
+
+                        <option value="">
+                            Select Year
+                        </option>
+
+                        <option value="1st Year">
+                            1st Year
+                        </option>
+
+                        <option value="2nd Year">
+                            2nd Year
+                        </option>
+
+                        <option value="3rd Year">
+                            3rd Year
+                        </option>
+
+                        <option value="4th Year">
+                            4th Year
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Password -->
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Create a password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+
+                    <label for="confirmPassword">
+                        Confirm Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Confirm your password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Error / Success Message -->
+                <div id="registerMessage"></div>
+
+
+                <!-- Register Button -->
+                <button
+                    type="submit"
+                    class="auth-btn"
+                >
+                    Create Account
+                </button>
+
+
+                <p class="auth-footer-text">
+
+                    Already have an account?
+
+                    <a href="login.html">
+                        Login here
+                    </a>
+
+                </p>
+
+            </form>
+
+        </div>
+
+    </main>
+
+
+    <!-- JavaScript -->
+    <script src="../js/common.js"></script>
+    <script src="../js/auth.js"></script>
+
+</body>
+</html>

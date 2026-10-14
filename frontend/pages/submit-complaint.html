@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Submit Complaint - Campus Complaint System</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/complaint.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Campus Complaint System
+        </div>
+
+        <div class="nav-links">
+            <a href="../index.html">Home</a>
+            <a href="student-dashboard.html">Dashboard</a>
+            <a href="my-complaints.html">My Complaints</a>
+            <a href="notifications.html" class="notification-nav">
+                🔔 Notifications
+                <span id="notificationBadge" class="notification-badge hidden">0</span>
+            </a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </div>
+
+    </nav>
+
+
+    <main class="complaint-page">
+
+        <div class="complaint-container">
+
+            <div class="complaint-header">
+
+                <p class="page-label">
+                    Campus Grievance
+                </p>
+
+                <h1>Submit a Complaint</h1>
+
+                <p>
+                    Report a campus issue and our administration team
+                    will review it.
+                </p>
+
+            </div>
+
+
+            <div id="complaintMessage"></div>
+
+
+            <form id="complaintForm">
+
+                <!-- TITLE -->
+
+                <div class="form-group">
+
+                    <label for="complaintTitle">
+                        Complaint Title
+                    </label>
+
+                    <input
+                        type="text"
+                        id="complaintTitle"
+                        placeholder="Enter a short title for your complaint"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CATEGORY -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            Category
+                        </label>
+
+                        <select id="category" required>
+
+                            <option value="">
+                                Select Category
+                            </option>
+
+                            <option value="Academic">
+                                Academic
+                            </option>
+
+                            <option value="Hostel">
+                                Hostel
+                            </option>
+
+                            <option value="Infrastructure">
+                                Infrastructure
+                            </option>
+
+                            <option value="Mess/Cafeteria">
+                                Mess / Cafeteria
+                            </option>
+
+                            <option value="Library">
+                                Library
+                            </option>
+
+                            <option value="Harassment">
+                                Harassment
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- PRIORITY -->
+
+                    <div class="form-group">
+
+                        <label for="priority">
+                            Priority
+                        </label>
+
+                        <select id="priority" required>
+
+                            <option value="">
+                                Select Priority
+                            </option>
+
+                            <option value="Low">
+                                Low
+                            </option>
+
+                            <option value="Medium">
+                                Medium
+                            </option>
+
+                            <option value="High">
+                                High
+                            </option>
+
+                            <option value="Critical">
+                                Critical
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LOCATION -->
+
+                <div class="form-group">
+
+                    <label for="location">
+                        Location
+                    </label>
+
+                    <input
+                        type="text"
+                        id="location"
+                        placeholder="Example: Block A, Room 204"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        rows="6"
+                        placeholder="Describe your complaint in detail..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- EVIDENCE -->
+
+                <div class="form-group">
+
+                    <label for="evidence">
+                        Evidence / Image
+                        <span class="optional">(Optional)</span>
+                    </label>
+
+                    <input
+                        type="file"
+                        id="evidence"
+                        accept="image/*"
+                    >
+
+                    <small>
+                        You may upload an image related to your complaint.
+                    </small>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="form-actions">
+
+                    <a
+                        href="student-dashboard.html"
+                        class="cancel-btn"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="submit-btn"
+                    >
+                        Submit Complaint
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+
+    <footer class="footer">
+
+        <p>
+            © 2026 Campus Complaint System. All rights reserved.
+        </p>
+
+    </footer>
+
+
+    <script src="../js/common.js"></script>
+    <script src="../js/complaints.js"></script>
+
+</body>
+</html>

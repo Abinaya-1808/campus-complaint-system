@@ -1,0 +1,182 @@
+/* =========================
+   AUTH PAGE
+========================= */
+
+.auth-page {
+    min-height: calc(100vh - 72px);
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f8fafc;
+}
+
+
+/* =========================
+   AUTH CONTAINER
+========================= */
+
+.auth-container {
+    width: 100%;
+    max-width: 520px;
+    padding: 40px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(15, 23, 42, 0.08);
+}
+
+
+/* =========================
+   AUTH HEADER
+========================= */
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-tag {
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.auth-header h1 {
+    font-size: 30px;
+    color: #111827;
+    margin-bottom: 10px;
+}
+
+.auth-header p:last-child {
+    color: #64748b;
+    font-size: 14px;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    background: #ffffff;
+    color: #111827;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+#registerMessage,
+#loginMessage {
+    margin-bottom: 15px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.message-error {
+    padding: 10px 12px;
+    border-radius: 7px;
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.message-success {
+    padding: 10px 12px;
+    border-radius: 7px;
+    background: #f0fdf4;
+    color: #16a34a;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.auth-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.auth-btn:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================
+   FOOTER TEXT
+========================= */
+
+.auth-footer-text {
+    margin-top: 20px;
+    text-align: center;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.auth-footer-text a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-footer-text a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .auth-page {
+        padding: 30px 15px;
+    }
+
+    .auth-container {
+        padding: 25px 20px;
+    }
+
+    .auth-header h1 {
+        font-size: 25px;
+    }
+
+}

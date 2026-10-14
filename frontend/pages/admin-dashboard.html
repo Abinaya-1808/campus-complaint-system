@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Campus Complaint System</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+
+<body class="admin-page">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">Campus Complaint System</div>
+
+        <div class="nav-links">
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="admin-complaints.html">Complaints</a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Dashboard -->
+    <main class="admin-container">
+
+        <!-- Welcome -->
+        <section class="admin-header">
+            <div>
+                <p class="admin-label">ADMIN PANEL</p>
+                <h1>Welcome, <span id="adminName">Administrator</span> 👋</h1>
+                <p>Monitor and manage Campus Complaint Systems from one place.</p>
+            </div>
+
+            <a href="admin-complaints.html" class="admin-primary-btn">
+                View All Complaints
+            </a>
+        </section>
+
+        <!-- Statistics -->
+        <section class="admin-stats">
+
+            <div class="admin-stat-card total-card">
+                <div class="stat-icon">📋</div>
+                <div>
+                    <p>Total Complaints</p>
+                    <h2 id="totalComplaints">0</h2>
+                </div>
+            </div>
+
+            <div class="admin-stat-card pending-card">
+                <div class="stat-icon">⏳</div>
+                <div>
+                    <p>Pending</p>
+                    <h2 id="pendingComplaints">0</h2>
+                </div>
+            </div>
+
+            <div class="admin-stat-card progress-card">
+                <div class="stat-icon">🔄</div>
+                <div>
+                    <p>In Progress</p>
+                    <h2 id="progressComplaints">0</h2>
+                </div>
+            </div>
+
+            <div class="admin-stat-card resolved-card">
+                <div class="stat-icon">✅</div>
+                <div>
+                    <p>Resolved</p>
+                    <h2 id="resolvedComplaints">0</h2>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Priority Overview -->
+        <section class="admin-section">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Priority Overview</h2>
+                    <p>Complaints requiring attention</p>
+                </div>
+            </div>
+
+            <div class="priority-grid">
+
+                <div class="priority-card">
+                    <span class="priority-label">Critical</span>
+                    <strong id="criticalComplaints">0</strong>
+                </div>
+
+                <div class="priority-card">
+                    <span class="priority-label">High</span>
+                    <strong id="highComplaints">0</strong>
+                </div>
+
+                <div class="priority-card">
+                    <span class="priority-label">Medium</span>
+                    <strong id="mediumComplaints">0</strong>
+                </div>
+
+                <div class="priority-card">
+                    <span class="priority-label">Low</span>
+                    <strong id="lowComplaints">0</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Recent Complaints -->
+        <section class="admin-section">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Recent Complaints</h2>
+                    <p>Latest complaints submitted by students</p>
+                </div>
+
+                <a href="admin-complaints.html" class="view-all-link">
+                    View All →
+                </a>
+            </div>
+
+            <div id="recentComplaints" class="recent-complaints">
+                <!-- Complaints will appear here -->
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2026 Campus Complaint System. All rights reserved.</p>
+    </footer>
+
+    <script src="../js/common.js"></script>
+    <script src="../js/admin.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Complaints - Campus Complaint System</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+
+<body class="admin-page">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+
+        <div class="logo">
+            Campus Complaint System
+        </div>
+
+        <div class="nav-links">
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="admin-complaints.html">Complaints</a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </div>
+
+    </nav>
+
+
+    <!-- Main Content -->
+    <main class="admin-container">
+
+        <!-- Page Header -->
+        <section class="admin-header">
+
+            <div>
+                <p class="admin-label">ADMIN PANEL</p>
+
+                <h1>Manage Complaints</h1>
+
+                <p>
+                    View, search and filter complaints submitted by students.
+                </p>
+            </div>
+
+            <a href="admin-dashboard.html" class="admin-primary-btn">
+                ← Dashboard
+            </a>
+
+        </section>
+
+
+        <!-- Search and Filters -->
+        <section class="admin-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <h2>Complaint Records</h2>
+
+                    <p>
+                        <span id="complaintCount">0</span>
+                        complaints found
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="admin-filters">
+
+                <!-- Search -->
+                <div class="admin-search">
+
+                    <label for="searchComplaint">
+                        Search
+                    </label>
+
+                    <input
+                        type="text"
+                        id="searchComplaint"
+                        placeholder="Search ID, title, student or register number..."
+                    >
+
+                </div>
+
+
+                <!-- Status -->
+                <div class="filter-group">
+
+                    <label for="statusFilter">
+                        Status
+                    </label>
+
+                    <select id="statusFilter">
+
+                        <option value="all">
+                            All Status
+                        </option>
+
+                        <option value="Pending">
+                            Pending
+                        </option>
+
+                        <option value="In Progress">
+                            In Progress
+                        </option>
+
+                        <option value="Resolved">
+                            Resolved
+                        </option>
+
+                        <option value="Rejected">
+                            Rejected
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Category -->
+                <div class="filter-group">
+
+                    <label for="categoryFilter">
+                        Category
+                    </label>
+
+                    <select id="categoryFilter">
+
+                        <option value="all">
+                            All Categories
+                        </option>
+
+                        <option value="Hostel">
+                            Hostel
+                        </option>
+
+                        <option value="Canteen">
+                            Canteen
+                        </option>
+
+                        <option value="Transport">
+                            Transport
+                        </option>
+
+                        <option value="Library">
+                            Library
+                        </option>
+
+                        <option value="Internet/Wi-Fi">
+                            Internet/Wi-Fi
+                        </option>
+
+                        <option value="Maintenance">
+                            Maintenance
+                        </option>
+
+                        <option value="Classroom">
+                            Classroom
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Priority -->
+                <div class="filter-group">
+
+                    <label for="priorityFilter">
+                        Priority
+                    </label>
+
+                    <select id="priorityFilter">
+
+                        <option value="all">
+                            All Priorities
+                        </option>
+
+                        <option value="Low">
+                            Low
+                        </option>
+
+                        <option value="Medium">
+                            Medium
+                        </option>
+
+                        <option value="High">
+                            High
+                        </option>
+
+                        <option value="Critical">
+                            Critical
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Complaints -->
+        <section class="admin-section">
+
+            <div id="adminComplaintsList">
+
+                <!-- Complaints will be loaded here -->
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <p>
+            © 2026 Campus Complaint System. All rights reserved.
+        </p>
+
+    </footer>
+
+
+    <script src="../js/common.js"></script>
+    <script src="../js/admin.js"></script>
+
+</body>
+</html>

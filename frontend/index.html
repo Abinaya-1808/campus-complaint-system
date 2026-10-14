@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Complaint System</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* Navbar Logo */
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 23px;
+            font-weight: 700;
+            color: #172554;
+        }
+
+        .navbar .logo img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .navbar .logo span {
+            color: #2563eb;
+        }
+
+        @media (max-width: 600px) {
+            .navbar .logo {
+                font-size: 18px;
+                gap: 8px;
+            }
+
+            .navbar .logo img {
+                width: 42px;
+                height: 42px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <header class="navbar">
+
+        <a href="index.html" class="logo">
+            <img src="assets/images/KIT Log.webp" alt="KIT Logo">
+            <span>Campus Complaint</span>
+        </a>
+
+        <nav>
+            <a href="index.html" class="active">Home</a>
+            <a href="pages/login.html">Login</a>
+            <a href="pages/register.html" class="nav-btn">Register</a>
+        </nav>
+
+    </header>
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <p class="hero-tag">CAMPUS COMPLAINT MANAGEMENT</p>
+
+            <h1>
+                Your Voice Matters.
+                <span>We Help Resolve It.</span>
+            </h1>
+
+            <p class="hero-description">
+                Report campus issues easily, track your complaints,
+                and stay updated until your complaint is resolved.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="pages/login.html" class="primary-btn">
+                    Submit a Complaint
+                </a>
+
+                <a href="pages/register.html" class="secondary-btn">
+                    Create Account
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-card">
+
+            <div class="complaint-icon">✓</div>
+
+            <h3>Complaint Tracking</h3>
+
+            <p>
+                Submit your complaint and track its progress
+                from submission to resolution.
+            </p>
+
+            <div class="status-box">
+                <span>Complaint Status</span>
+                <strong>In Progress</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- How It Works -->
+    <section class="section">
+
+        <div class="section-heading">
+            <p>HOW IT WORKS</p>
+            <h2>Simple. Transparent. Easy.</h2>
+        </div>
+
+        <div class="steps">
+
+            <div class="step-card">
+                <div class="step-number">01</div>
+                <h3>Submit</h3>
+                <p>
+                    Submit your campus complaint with
+                    the required details.
+                </p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">02</div>
+                <h3>Track</h3>
+                <p>
+                    Track the status of your complaint
+                    through your dashboard.
+                </p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">03</div>
+                <h3>Resolve</h3>
+                <p>
+                    Receive updates and view the response
+                    when your complaint is resolved.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Complaint Categories -->
+    <section class="categories-section">
+
+        <div class="section-heading">
+            <p>COMPLAINT CATEGORIES</p>
+            <h2>What can you report?</h2>
+        </div>
+
+        <div class="categories">
+
+            <div class="category-card">
+                <div class="category-icon">🏠</div>
+                <h3>Hostel</h3>
+                <p>Room, water and accommodation issues.</p>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🍴</div>
+                <h3>Canteen</h3>
+                <p>Food and canteen related complaints.</p>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🚌</div>
+                <h3>Transport</h3>
+                <p>Bus and transportation related issues.</p>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">📚</div>
+                <h3>Library</h3>
+                <p>Library facilities and resources.</p>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🌐</div>
+                <h3>Internet / Wi-Fi</h3>
+                <p>Internet and network connectivity issues.</p>
+            </div>
+
+            <div class="category-card">
+                <div class="category-icon">🔧</div>
+                <h3>Maintenance</h3>
+                <p>Electrical, furniture and maintenance issues.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Call To Action -->
+    <section class="cta">
+
+        <h2>Have a problem on campus?</h2>
+
+        <p>
+            Don't keep it to yourself. Report it and help
+            make your campus better.
+        </p>
+
+        <a href="pages/register.html" class="primary-btn">
+            Get Started
+        </a>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <div class="footer-content">
+
+            <div>
+                <h3>Campus Complaint</h3>
+                <p>
+                    A simple platform for managing campus
+                    complaints and improving campus life.
+                </p>
+            </div>
+
+            <div>
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="pages/login.html">Login</a>
+                <a href="pages/register.html">Register</a>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>
+                © 2026 Campus Complaint System. All rights reserved.
+            </p>
+        </div>
+
+    </footer>
+
+</body>
+</html>
