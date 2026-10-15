@@ -180,3 +180,71 @@
     }
 
 }
+
+/* ==================================================
+   DARK MODE STYLES - AUTHENTICATION
+================================================== */
+[data-theme="dark"] body,
+[data-theme="dark"] .auth-page {
+    background: #0b0f19 !important;
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .auth-container {
+    background: #151c2c !important;
+    border: 1px solid #273549 !important;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6) !important;
+}
+
+[data-theme="dark"] .auth-header h1 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .auth-header p {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .auth-tag {
+    color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .form-group label {
+    color: #e2e8f0 !important;
+}
+
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group select {
+    background: #0f172a !important;
+    color: #f8fafc !important;
+    border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .form-group input:focus,
+[data-theme="dark"] .form-group select:focus {
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2) !important;
+}
+
+[data-theme="dark"] .form-group input::placeholder {
+    color: #64748b !important;
+}
+
+[data-theme="dark"] .auth-footer-text {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .auth-footer-text a {
+    color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .message-error {
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: #fca5a5 !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+
+[data-theme="dark"] .message-success {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: #6ee7b7 !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}

@@ -608,3 +608,121 @@ main form a:hover {
     border-left: 4px solid #f59e0b;
     margin-bottom: 8px !important;
 }
+
+/* ==================================================
+   DARK MODE STYLES - COMPLAINTS & DETAILS
+================================================== */
+[data-theme="dark"] body,
+[data-theme="dark"] .complaint-page,
+[data-theme="dark"] .notification-container,
+[data-theme="dark"] .complaint-details-page {
+    background: #0b0f19 !important;
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .notification-header,
+[data-theme="dark"] .notifications-section,
+[data-theme="dark"] .notification-summary > div,
+[data-theme="dark"] .form-card,
+[data-theme="dark"] .details-section,
+[data-theme="dark"] .details-header,
+[data-theme="dark"] .summary-card,
+[data-theme="dark"] .complaint-card,
+[data-theme="dark"] .complaint-container {
+    background: #151c2c !important;
+    border: 1px solid #273549 !important;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .notification-card {
+    background: #151c2c !important;
+    border: 1px solid #273549 !important;
+}
+
+[data-theme="dark"] .notification-card:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .notification-card.unread {
+    background: #1e293b !important;
+    border-color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .notification-icon {
+    background: #1e293b !important;
+    color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .notification-text h3,
+[data-theme="dark"] .details-header h1,
+[data-theme="dark"] .complaint-card h3,
+[data-theme="dark"] .details-section h2,
+[data-theme="dark"] .form-header h1 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .notification-text p,
+[data-theme="dark"] .notification-header p,
+[data-theme="dark"] .form-header p,
+[data-theme="dark"] .complaint-card p,
+[data-theme="dark"] .details-meta span,
+[data-theme="dark"] .details-info p,
+[data-theme="dark"] .notification-summary span {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .notification-summary strong,
+[data-theme="dark"] .details-meta strong,
+[data-theme="dark"] .details-info strong {
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .notification-label,
+[data-theme="dark"] .form-tag,
+[data-theme="dark"] .details-tag {
+    color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .timeline-step,
+[data-theme="dark"] .timeline-item,
+[data-theme="dark"] .response-item,
+[data-theme="dark"] .response-box {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .response-item p,
+[data-theme="dark"] .timeline-content p {
+    color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .complaint-form input,
+[data-theme="dark"] .complaint-form select,
+[data-theme="dark"] .complaint-form textarea,
+[data-theme="dark"] .form-card input,
+[data-theme="dark"] .form-card select,
+[data-theme="dark"] .form-card textarea {
+    background: #0f172a !important;
+    color: #ffffff !important;
+    border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .complaint-form label,
+[data-theme="dark"] .form-card label {
+    color: #e2e8f0 !important;
+}
+
+[data-theme="dark"] .anonymous-box,
+[data-theme="dark"] .photo-upload-box,
+[data-theme="dark"] .resolution-feedback-card {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .anonymous-badge {
+    background: #1e293b !important;
+    border-color: #475569 !important;
+    color: #94a3b8 !important;
+}

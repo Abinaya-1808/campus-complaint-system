@@ -322,3 +322,64 @@
 .notification-badge.hidden {
     display: none;
 }
+
+/* ==================================================
+   DARK MODE STYLES - STUDENT DASHBOARD
+================================================== */
+[data-theme="dark"] body,
+[data-theme="dark"] .dashboard-page {
+    background: #0b0f19 !important;
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .dashboard-header h1,
+[data-theme="dark"] .section-heading h2,
+[data-theme="dark"] .profile-info h2,
+[data-theme="dark"] .stat-card h3,
+[data-theme="dark"] .action-card h3,
+[data-theme="dark"] .empty-state h3 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .dashboard-subtitle,
+[data-theme="dark"] .section-heading p,
+[data-theme="dark"] .profile-details span,
+[data-theme="dark"] .stat-card span,
+[data-theme="dark"] .action-card p,
+[data-theme="dark"] .empty-state p {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .welcome-text {
+    color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .profile-card,
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .action-card,
+[data-theme="dark"] .recent-list {
+    background: #151c2c !important;
+    border: 1px solid #273549 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .profile-details strong {
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .profile-icon,
+[data-theme="dark"] .stat-icon,
+[data-theme="dark"] .action-icon {
+    background: #1e293b !important;
+    color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .secondary-btn {
+    background: #1e293b !important;
+    color: #38bdf8 !important;
+    border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .secondary-btn:hover {
+    background: #273549 !important;
+}

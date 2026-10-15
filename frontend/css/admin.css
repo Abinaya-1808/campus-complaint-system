@@ -1001,3 +1001,99 @@
     border-left: 4px solid #f59e0b;
     margin-bottom: 8px !important;
 }
+
+/* ==================================================
+   DARK MODE STYLES - ADMIN PORTAL
+================================================== */
+[data-theme="dark"] body,
+[data-theme="dark"] .admin-page {
+    background: #0b0f19 !important;
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .admin-header,
+[data-theme="dark"] .admin-stat-card,
+[data-theme="dark"] .admin-section,
+[data-theme="dark"] .admin-complaint-card,
+[data-theme="dark"] .admin-filters,
+[data-theme="dark"] .admin-details-header,
+[data-theme="dark"] .admin-details-section,
+[data-theme="dark"] .admin-table-container {
+    background: #151c2c !important;
+    border: 1px solid #273549 !important;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .admin-header h1,
+[data-theme="dark"] .admin-stat-card h2,
+[data-theme="dark"] .admin-section h2,
+[data-theme="dark"] .admin-complaint-card h3,
+[data-theme="dark"] .admin-details-header h1,
+[data-theme="dark"] .admin-details-section h2,
+[data-theme="dark"] .priority-card h3 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .admin-header p,
+[data-theme="dark"] .admin-stat-card p,
+[data-theme="dark"] .section-heading p,
+[data-theme="dark"] .admin-complaint-card p,
+[data-theme="dark"] .priority-card span,
+[data-theme="dark"] .admin-meta span {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .admin-label {
+    color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .priority-card,
+[data-theme="dark"] .recent-complaint-card,
+[data-theme="dark"] .admin-timeline-step,
+[data-theme="dark"] .admin-response-item {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .recent-complaint-card:hover {
+    background: #273549 !important;
+}
+
+[data-theme="dark"] .recent-complaint-info h3 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .recent-complaint-info p {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .recent-complaint-id {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .admin-filters label,
+[data-theme="dark"] .admin-update-form label,
+[data-theme="dark"] .admin-form-group label {
+    color: #e2e8f0 !important;
+}
+
+[data-theme="dark"] .admin-filters select,
+[data-theme="dark"] .admin-filters input,
+[data-theme="dark"] .admin-update-form select,
+[data-theme="dark"] .admin-update-form textarea,
+[data-theme="dark"] .admin-form-group select,
+[data-theme="dark"] .admin-form-group textarea {
+    background: #0f172a !important;
+    color: #ffffff !important;
+    border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .admin-stat-card .stat-icon {
+    background: #1e293b !important;
+    color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .admin-details-meta strong {
+    color: #f8fafc !important;
+}
