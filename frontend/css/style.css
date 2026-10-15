@@ -493,7 +493,7 @@ footer {
     text-decoration: none;
 }
 
-/* KIT Logo in Navbar */
+/* Logo in Navbar */
 
 .logo {
     display: flex;
@@ -501,24 +501,26 @@ footer {
     gap: 10px;
     text-decoration: none;
     color: #172554;
-    font-size: 23px;
+    font-size: 22px;
     font-weight: 700;
 }
 
-.logo img {
-    width: 55px;
-    height: 55px;
-    object-fit: contain;
+.logo-icon {
+    width: 30px;
+    height: 30px;
+    color: #2563eb;
+    stroke: #2563eb;
+    flex-shrink: 0;
 }
 
 @media (max-width: 600px) {
     .logo {
-        font-size: 18px;
+        font-size: 17px;
         gap: 8px;
     }
 
-    .logo img {
-        width: 42px;
-        height: 42px;
+    .logo-icon {
+        width: 24px;
+        height: 24px;
     }
 }
