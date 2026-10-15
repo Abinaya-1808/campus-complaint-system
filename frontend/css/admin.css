@@ -1271,3 +1271,119 @@
     color: #38bdf8 !important;
     border-color: #334155 !important;
 }
+
+/* ==================================================
+   ADMIN COMPLAINT CARDS HIGH CONTRAST & LEGIBILITY
+================================================== */
+.admin-complaint-title {
+    font-size: 21px !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+    margin-bottom: 6px !important;
+}
+
+.admin-complaint-id {
+    color: #64748b !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+}
+
+.admin-info-item,
+.admin-detail-box {
+    background: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 9px !important;
+    padding: 12px 14px !important;
+}
+
+.admin-info-item span,
+.admin-detail-box span {
+    display: block !important;
+    color: #475569 !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 5px !important;
+}
+
+.admin-info-item strong,
+.admin-detail-box strong {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    display: block !important;
+    word-break: break-word !important;
+}
+
+.admin-student-info {
+    color: #334155 !important;
+    font-size: 14.5px !important;
+    font-weight: 600 !important;
+}
+
+.priority-badge {
+    display: inline-block !important;
+    padding: 4px 12px !important;
+    border-radius: 12px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+}
+
+/* Dark Mode Overrides for Complaint Info Boxes */
+[data-theme="dark"] .admin-complaint-title {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .admin-complaint-id {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .admin-info-item,
+[data-theme="dark"] .admin-detail-box {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .admin-info-item span,
+[data-theme="dark"] .admin-detail-box span {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .admin-info-item strong,
+[data-theme="dark"] .admin-detail-box strong {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .admin-student-info {
+    color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .priority-badge {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+}
+
+[data-theme="dark"] .priority-low {
+    background: #1e293b !important;
+    color: #94a3b8 !important;
+    border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .priority-medium {
+    background: rgba(245, 158, 11, 0.22) !important;
+    color: #fcd34d !important;
+    border: 1px solid rgba(245, 158, 11, 0.45) !important;
+}
+
+[data-theme="dark"] .priority-high {
+    background: rgba(249, 115, 22, 0.22) !important;
+    color: #fdba74 !important;
+    border: 1px solid rgba(249, 115, 22, 0.45) !important;
+}
+
+[data-theme="dark"] .priority-critical {
+    background: rgba(239, 68, 68, 0.25) !important;
+    color: #fca5a5 !important;
+    border: 1px solid rgba(239, 68, 68, 0.5) !important;
+}

@@ -746,3 +746,44 @@ main form a:hover {
     color: #38bdf8 !important;
     border-color: #334155 !important;
 }
+
+/* ==================================================
+   STUDENT COMPLAINT DETAILS HIGH CONTRAST
+================================================== */
+.detail-item {
+    background: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 9px !important;
+    padding: 12px 14px !important;
+}
+
+.detail-item span {
+    display: block !important;
+    color: #475569 !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 5px !important;
+}
+
+.detail-item strong {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    display: block !important;
+    word-break: break-word !important;
+}
+
+[data-theme="dark"] .detail-item {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .detail-item span {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .detail-item strong {
+    color: #ffffff !important;
+}
