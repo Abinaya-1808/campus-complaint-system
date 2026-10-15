@@ -66,6 +66,7 @@ function initComplaintForm(currentUser) {
         const priority = document.getElementById("priority").value;
         const location = document.getElementById("location").value.trim();
         const description = document.getElementById("description").value.trim();
+        const isAnonymous = document.getElementById("isAnonymous") ? document.getElementById("isAnonymous").checked : false;
         const evidenceInput = document.getElementById("evidence");
         const messageEl = document.getElementById("complaintMessage");
         const submitBtn = complaintForm.querySelector('button[type="submit"]');
@@ -97,7 +98,8 @@ function initComplaintForm(currentUser) {
                 category,
                 priority,
                 location,
-                description
+                description,
+                isAnonymous
             };
 
             const response = await apiFetch("/complaints", {
@@ -207,7 +209,7 @@ async function initMyComplaints() {
             card.innerHTML = `
                 <div class="complaint-card-header">
                     <div>
-                        <h3>${escapeHtml(complaint.title)}</h3>
+                        <h3>${escapeHtml(complaint.title)} ${complaint.isAnonymous ? `<span class="anonymous-badge">🕵️ Anonymous</span>` : ""}</h3>
                         <span class="complaint-id">${escapeHtml(complaint._id)}</span>
                     </div>
                     <span class="status-badge ${statusClass}">
@@ -345,7 +347,7 @@ async function initComplaintDetails(currentUser) {
 
             <div class="details-header">
                 <div>
-                    <h1>${escapeHtml(complaint.title)}</h1>
+                    <h1>${escapeHtml(complaint.title)} ${complaint.isAnonymous ? `<span class="anonymous-badge">🕵️ Anonymous</span>` : ""}</h1>
                     <div class="details-id">Complaint ID: ${escapeHtml(complaint._id)}</div>
                 </div>
                 <span class="status-badge ${statusClass}">

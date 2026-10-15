@@ -74,6 +74,10 @@ const complaintSchema = new mongoose.Schema({
     required: [true, 'Complaint description is required'],
     trim: true
   },
+  isAnonymous: {
+    type: Boolean,
+    default: false
+  },
   priority: {
     type: String,
     enum: {

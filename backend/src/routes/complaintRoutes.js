@@ -20,6 +20,7 @@ const createComplaintValidation = [
     .isIn(allowedCategories).withMessage('Invalid category. Must be one of: ' + allowedCategories.join(', ')),
   body('location').trim().notEmpty().withMessage('Location is required.'),
   body('description').trim().notEmpty().withMessage('Description is required.'),
+  body('isAnonymous').optional().isBoolean().withMessage('isAnonymous must be a boolean.'),
   body('priority').optional()
     .isIn(allowedPriorities).withMessage('Invalid priority. Must be one of: ' + allowedPriorities.join(', '))
 ];

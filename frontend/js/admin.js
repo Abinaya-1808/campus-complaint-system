@@ -238,14 +238,15 @@ async function initAdminComplaintsList() {
                             : "Recent";
 
                         const studentObj = complaint.student || {};
-                        const sName = studentObj.name || complaint.studentName || "Unknown Student";
-                        const sReg = studentObj.registerNumber || studentObj.studentId || complaint.registerNumber || "-";
+                        const isAnon = Boolean(complaint.isAnonymous);
+                        const sName = isAnon ? "Anonymous Student" : (studentObj.name || complaint.studentName || "Unknown Student");
+                        const sReg = isAnon ? "Protected" : (studentObj.registerNumber || studentObj.studentId || complaint.registerNumber || "-");
 
                         return `
                             <div class="admin-complaint-card">
                                 <div class="admin-complaint-header">
                                     <div>
-                                        <h3 class="admin-complaint-title">${escapeHtml(complaint.title)}</h3>
+                                        <h3 class="admin-complaint-title">${escapeHtml(complaint.title)} ${isAnon ? `<span class="anonymous-badge">🕵️ Anonymous</span>` : ""}</h3>
                                         <p class="admin-complaint-id">${escapeHtml(complaint._id)}</p>
                                     </div>
                                     <span class="admin-status ${statusClass}">${escapeHtml(complaint.status)}</span>
@@ -365,9 +366,10 @@ async function initAdminComplaintDetails() {
      */
     function renderDetails(complaint) {
         const studentObj = complaint.student || {};
-        const sName = studentObj.name || complaint.studentName || "Student";
-        const sReg = studentObj.registerNumber || studentObj.studentId || complaint.registerNumber || "-";
-        const sEmail = studentObj.email || complaint.email || "-";
+        const isAnon = Boolean(complaint.isAnonymous);
+        const sName = isAnon ? "Anonymous Student" : (studentObj.name || complaint.studentName || "Student");
+        const sReg = isAnon ? "Protected" : (studentObj.registerNumber || studentObj.studentId || complaint.registerNumber || "-");
+        const sEmail = isAnon ? "Protected" : (studentObj.email || complaint.email || "-");
         const sDept = studentObj.department || complaint.department || "-";
         const sYear = studentObj.year || complaint.year || "-";
 
@@ -421,7 +423,7 @@ async function initAdminComplaintDetails() {
                 <section class="admin-details-header">
                     <div class="admin-details-top">
                         <div>
-                            <h1 class="admin-details-title">${escapeHtml(complaint.title)}</h1>
+                            <h1 class="admin-details-title">${escapeHtml(complaint.title)} ${isAnon ? `<span class="anonymous-badge">🕵️ Anonymous</span>` : ""}</h1>
                             <p class="admin-details-id">Complaint ID: ${escapeHtml(complaint._id)}</p>
                         </div>
                         <span class="admin-status ${getStatusClass(complaint.status)}">

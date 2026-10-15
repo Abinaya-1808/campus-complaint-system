@@ -318,3 +318,106 @@ main form a:hover {
         font-size: 24px;
     }
 }
+
+/* ==================================================
+   ANONYMOUS MODE TOGGLE & BADGES
+================================================== */
+
+.anonymous-group {
+    margin: 20px 0 25px 0;
+}
+
+.anonymous-toggle-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.anonymous-toggle-card:hover {
+    border-color: #93c5fd;
+    background: #eff6ff;
+}
+
+.toggle-checkbox-wrapper {
+    position: relative;
+    width: 48px;
+    height: 26px;
+    flex-shrink: 0;
+}
+
+.toggle-checkbox-wrapper input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #cbd5e1;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 34px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.toggle-checkbox-wrapper input:checked + .toggle-slider {
+    background-color: #2563eb;
+}
+
+.toggle-checkbox-wrapper input:checked + .toggle-slider:before {
+    transform: translateX(22px);
+}
+
+.toggle-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.toggle-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.toggle-desc {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.anonymous-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}

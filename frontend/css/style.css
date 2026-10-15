@@ -524,3 +524,4 @@ footer {
         height: 24px;
     }
 }
+.anonymous-badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12px; font-weight: 600; }

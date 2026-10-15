@@ -111,7 +111,7 @@ async function loadComplaintStats() {
                     item.innerHTML = `
                         <div class="complaint-card-header">
                             <div>
-                                <h3>${escapeText(c.title)}</h3>
+                                <h3>${escapeText(c.title)} ${c.isAnonymous ? '<span class="anonymous-badge">🕵️ Anonymous</span>' : ''}</h3>
                                 <span class="complaint-id">${escapeText(c._id)}</span>
                             </div>
                             <span class="status-badge ${statusClass}">${escapeText(c.status)}</span>
