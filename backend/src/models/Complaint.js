@@ -49,6 +49,32 @@ const adminResponseSchema = new mongoose.Schema({
   }
 }, { _id: false });
 
+const departmentRoutingMap = {
+  'Hostel': 'Hostel Administration & Welfare',
+  'Mess/Cafeteria': 'Food Safety & Dining Services',
+  'Canteen': 'Food Safety & Dining Services',
+  'Infrastructure': 'Estate & Physical Infrastructure',
+  'Maintenance': 'Estate & Physical Infrastructure',
+  'Classroom': 'Estate & Physical Infrastructure',
+  'Academic': 'Academic Affairs & Faculty Council',
+  'Library': 'Library & Learning Resources',
+  'Internet/Wi-Fi': 'IT Services & Campus Network',
+  'Transport': 'Campus Fleet & Transportation',
+  'Harassment': 'Student Safety & Ethics Committee',
+  'Other': 'Dean of Student Affairs'
+};
+
+function getDepartmentForCategory(category) {
+  if (!category) return 'Dean of Student Affairs';
+  const cat = String(category).trim();
+  if (departmentRoutingMap[cat]) return departmentRoutingMap[cat];
+  const catLower = cat.toLowerCase();
+  for (const [key, dept] of Object.entries(departmentRoutingMap)) {
+    if (catLower.includes(key.toLowerCase())) return dept;
+  }
+  return 'Dean of Student Affairs';
+}
+
 const complaintSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -96,6 +122,10 @@ const complaintSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  department: {
+    type: String,
+    default: 'Dean of Student Affairs'
+  },
   priority: {
     type: String,
     enum: {
@@ -127,6 +157,8 @@ const Complaint = mongoose.model('Complaint', complaintSchema);
 
 module.exports = {
   Complaint,
+  departmentRoutingMap,
+  getDepartmentForCategory,
   allowedCategories,
   allowedPriorities,
   allowedStatuses

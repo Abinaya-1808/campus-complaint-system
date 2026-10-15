@@ -470,6 +470,10 @@ async function initComplaintDetails(currentUser) {
                 <h2>Complaint Information</h2>
                 <div class="details-grid">
                     <div class="detail-item">
+                        <span>Routed Department</span>
+                        <strong style="color: #2563eb;">🏛️ ${escapeHtml(complaint.department || (typeof getDepartmentForCategory === "function" ? getDepartmentForCategory(complaint.category) : "Dean of Student Affairs"))}</strong>
+                    </div>
+                    <div class="detail-item">
                         <span>Category</span>
                         <strong>${escapeHtml(complaint.category)}</strong>
                     </div>

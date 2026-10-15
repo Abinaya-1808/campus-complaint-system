@@ -348,3 +348,32 @@ if (document.readyState === 'loading') {
 } else {
     initNavbarLogoIcon();
 }
+
+/**
+ * Global Department Routing Taxonomy
+ */
+const DEPARTMENT_ROUTING_MAP = {
+    'Hostel': 'Hostel Administration & Welfare',
+    'Mess/Cafeteria': 'Food Safety & Dining Services',
+    'Canteen': 'Food Safety & Dining Services',
+    'Infrastructure': 'Estate & Physical Infrastructure',
+    'Maintenance': 'Estate & Physical Infrastructure',
+    'Classroom': 'Estate & Physical Infrastructure',
+    'Academic': 'Academic Affairs & Faculty Council',
+    'Library': 'Library & Learning Resources',
+    'Internet/Wi-Fi': 'IT Services & Campus Network',
+    'Transport': 'Campus Fleet & Transportation',
+    'Harassment': 'Student Safety & Ethics Committee',
+    'Other': 'Dean of Student Affairs'
+};
+
+function getDepartmentForCategory(category) {
+    if (!category) return 'Dean of Student Affairs';
+    const cat = String(category).trim();
+    if (DEPARTMENT_ROUTING_MAP[cat]) return DEPARTMENT_ROUTING_MAP[cat];
+    const catLower = cat.toLowerCase();
+    for (const [key, dept] of Object.entries(DEPARTMENT_ROUTING_MAP)) {
+        if (catLower.includes(key.toLowerCase())) return dept;
+    }
+    return 'Dean of Student Affairs';
+}

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { validationResult } = require('express-validator');
-const { Complaint } = require('../models/Complaint');
+const { Complaint, getDepartmentForCategory } = require('../models/Complaint');
 const Notification = require('../models/Notification');
 
 // @desc    Submit a new complaint
@@ -24,7 +24,10 @@ const createComplaint = async (req, res) => {
       });
     }
 
-    const { title, category, location, description, priority, isAnonymous, image } = req.body;
+    const { title, category, location, description, priority, isAnonymous, image, department } = req.body;
+    const assignedDept = (department && typeof department === 'string' && department.trim().length > 0)
+      ? department.trim()
+      : getDepartmentForCategory(category);
 
     const newComplaint = new Complaint({
       title: title.trim(),
@@ -33,13 +36,14 @@ const createComplaint = async (req, res) => {
       description: description.trim(),
       priority: priority || 'Medium',
       isAnonymous: Boolean(isAnonymous),
+      department: assignedDept,
       image: (typeof image === 'string' && image.startsWith('data:image/')) ? image : '',
       status: 'Pending',
       student: req.user._id,
       statusTimeline: [
         {
           status: 'Pending',
-          message: 'Complaint submitted by student.',
+          message: `Complaint submitted and auto-routed to ${assignedDept}.`,
           date: new Date(),
           updatedBy: req.user._id
         }
@@ -101,10 +105,15 @@ const getComplaints = async (req, res) => {
       .populate('adminResponses.admin', 'name email role')
       .sort({ createdAt: -1 });
 
+    const enrichedComplaints = complaints.map(c => {
+      const cObj = c.toObject ? c.toObject() : { ...c };
+      cObj.department = cObj.department || getDepartmentForCategory(cObj.category);
+      return cObj;
+    });
     return res.status(200).json({
       success: true,
-      count: complaints.length,
-      complaints
+      count: enrichedComplaints.length,
+      complaints: enrichedComplaints
     });
   } catch (error) {
     console.error('Get Complaints Error:', error.message);
@@ -148,9 +157,11 @@ const getComplaintById = async (req, res) => {
       });
     }
 
+    const cObj = complaint.toObject ? complaint.toObject() : { ...complaint };
+    cObj.department = cObj.department || getDepartmentForCategory(cObj.category);
     return res.status(200).json({
       success: true,
-      complaint
+      complaint: cObj
     });
   } catch (error) {
     console.error('Get Complaint By ID Error:', error.message);
@@ -190,7 +201,7 @@ const updateComplaintStatus = async (req, res) => {
       });
     }
 
-    const { status, message } = req.body;
+    const { status, message, department } = req.body;
     const complaint = await Complaint.findById(id);
 
     if (!complaint) {
@@ -201,10 +212,18 @@ const updateComplaintStatus = async (req, res) => {
     }
 
     const prevStatus = complaint.status;
+    let deptChanged = false;
+    if (department && typeof department === 'string' && department.trim().length > 0 && department.trim() !== complaint.department) {
+      complaint.department = department.trim();
+      deptChanged = true;
+    }
     complaint.status = status;
-    const timelineMsg = (message && message.trim().length > 0)
+    let timelineMsg = (message && message.trim().length > 0)
       ? message.trim()
       : `Status updated from ${prevStatus} to ${status}.`;
+    if (deptChanged) {
+      timelineMsg += ` (Transferred to ${complaint.department})`;
+    }
 
     complaint.statusTimeline.push({
       status,

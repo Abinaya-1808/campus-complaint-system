@@ -726,3 +726,23 @@ main form a:hover {
     border-color: #475569 !important;
     color: #94a3b8 !important;
 }
+
+.dept-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 12.5px;
+    font-weight: 600;
+    border: 1px solid #bfdbfe;
+    white-space: nowrap;
+}
+
+[data-theme="dark"] .dept-badge {
+    background: #1e293b !important;
+    color: #38bdf8 !important;
+    border-color: #334155 !important;
+}

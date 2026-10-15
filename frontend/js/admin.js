@@ -188,6 +188,7 @@ async function initAdminComplaintsList() {
     const searchInput = document.getElementById("searchComplaint");
     const statusFilter = document.getElementById("statusFilter");
     const categoryFilter = document.getElementById("categoryFilter");
+    const departmentFilter = document.getElementById("departmentFilter");
     const priorityFilter = document.getElementById("priorityFilter");
     const complaintCount = document.getElementById("complaintCount");
 
@@ -210,6 +211,7 @@ async function initAdminComplaintsList() {
             const searchValue = searchInput ? searchInput.value.trim().toLowerCase() : "";
             const selectedStatus = statusFilter ? statusFilter.value : "all";
             const selectedCategory = categoryFilter ? categoryFilter.value : "all";
+            const selectedDepartment = departmentFilter ? departmentFilter.value : "all";
             const selectedPriority = priorityFilter ? priorityFilter.value : "all";
 
             const filteredComplaints = allComplaints.filter(complaint => {
@@ -227,12 +229,14 @@ async function initAdminComplaintsList() {
 
                 const matchesStatus = (selectedStatus === "all") || (complaint.status === selectedStatus);
 
+                const compDept = complaint.department || (typeof getDepartmentForCategory === "function" ? getDepartmentForCategory(complaint.category) : "General");
+                const matchesDepartment = (selectedDepartment === "all") || (compDept === selectedDepartment);
                 const matchesCategory = (selectedCategory === "all") ||
                     (normalizeCategoryComparison(complaint.category, selectedCategory));
 
                 const matchesPriority = (selectedPriority === "all") || (complaint.priority === selectedPriority);
 
-                return matchesSearch && matchesStatus && matchesCategory && matchesPriority;
+                return matchesSearch && matchesStatus && matchesDepartment && matchesCategory && matchesPriority;
             });
 
             currentlyFilteredList = filteredComplaints;
@@ -336,6 +340,7 @@ async function initAdminComplaintsList() {
         if (searchInput) searchInput.addEventListener("input", displayComplaints);
         if (statusFilter) statusFilter.addEventListener("change", displayComplaints);
         if (categoryFilter) categoryFilter.addEventListener("change", displayComplaints);
+        if (departmentFilter) departmentFilter.addEventListener("change", displayComplaints);
         if (priorityFilter) priorityFilter.addEventListener("change", displayComplaints);
 
     } catch (err) {
@@ -498,6 +503,10 @@ async function initAdminComplaintDetails() {
                             <strong>${escapeHtml(sYear)}</strong>
                         </div>
                         <div class="admin-detail-box">
+                            <span>Assigned Department</span>
+                            <strong style="color: #2563eb;">🏛️ ${escapeHtml(complaint.department || (typeof getDepartmentForCategory === "function" ? getDepartmentForCategory(complaint.category) : "Dean of Student Affairs"))}</strong>
+                        </div>
+                        <div class="admin-detail-box">
                             <span>Category</span>
                             <strong>${escapeHtml(complaint.category)}</strong>
                         </div>
@@ -559,6 +568,21 @@ async function initAdminComplaintDetails() {
                         </div>
 
                         <div class="admin-form-group">
+                            <label for="adminDepartment">Transfer / Reassign Department</label>
+                            <select id="adminDepartment">
+                                <option value="Hostel Administration & Welfare">Hostel Administration & Welfare</option>
+                                <option value="Food Safety & Dining Services">Food Safety & Dining Services</option>
+                                <option value="Estate & Physical Infrastructure">Estate & Physical Infrastructure</option>
+                                <option value="Campus Fleet & Transportation">Campus Fleet & Transportation</option>
+                                <option value="IT Services & Campus Network">IT Services & Campus Network</option>
+                                <option value="Academic Affairs & Faculty Council">Academic Affairs & Faculty Council</option>
+                                <option value="Library & Learning Resources">Library & Learning Resources</option>
+                                <option value="Student Safety & Ethics Committee">Student Safety & Ethics Committee</option>
+                                <option value="Dean of Student Affairs">Dean of Student Affairs</option>
+                            </select>
+                        </div>
+
+                        <div class="admin-form-group">
                             <label for="adminResponse">Admin Response / Note</label>
                             <textarea id="adminResponse" placeholder="Enter status update message or official response to student..."></textarea>
                         </div>
@@ -596,6 +620,11 @@ async function initAdminComplaintDetails() {
         if (statusSelect) {
             statusSelect.value = complaint.status;
         }
+        const deptSelect = document.getElementById("adminDepartment");
+        if (deptSelect) {
+            const currentDept = complaint.department || (typeof getDepartmentForCategory === "function" ? getDepartmentForCategory(complaint.category) : "Dean of Student Affairs");
+            deptSelect.value = currentDept;
+        }
 
         // Attach Update Form submission handler
         const updateForm = document.getElementById("updateComplaintForm");
@@ -604,14 +633,16 @@ async function initAdminComplaintDetails() {
                 event.preventDefault();
 
                 const newStatus = document.getElementById("adminStatus").value;
+                const newDept = document.getElementById("adminDepartment") ? document.getElementById("adminDepartment").value : null;
                 const newResponse = document.getElementById("adminResponse").value.trim();
                 const updateMessage = document.getElementById("updateMessage");
                 const submitBtn = updateForm.querySelector('button[type="submit"]');
 
                 const statusChanged = (complaint.status !== newStatus);
+                const deptChanged = (newDept && newDept !== complaint.department);
                 const hasMessage = (newResponse.length > 0);
 
-                if (!statusChanged && !hasMessage) {
+                if (!statusChanged && !deptChanged && !hasMessage) {
                     showAdminMessage(updateMessage, "No changes detected. Select a new status or enter a response.", "error");
                     return;
                 }
@@ -628,6 +659,7 @@ async function initAdminComplaintDetails() {
                     if (statusChanged) {
                         const statusPayload = {
                             status: newStatus,
+                            department: newDept,
                             message: hasMessage ? newResponse : undefined
                         };
 
