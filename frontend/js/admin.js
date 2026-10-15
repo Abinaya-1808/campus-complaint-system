@@ -97,6 +97,20 @@ async function initAdminDashboard() {
         updateElementText("mediumComplaints", medium);
         updateElementText("lowComplaints", low);
 
+        // Initialize Interactive Charts
+        renderDashboardCharts(complaints);
+        // Re-render charts on theme change for instant color harmony
+        window.addEventListener('click', function(e) {
+            if (e.target && (e.target.id === 'themeToggleBtn' || e.target.closest('#themeToggleBtn'))) {
+                setTimeout(() => {
+                    if (typeof complaints !== 'undefined' && complaints.length >= 0) {
+                        renderDashboardCharts(complaints);
+                    }
+                }, 100);
+            }
+        });
+
+
         // Render Recent Complaints
         if (recentContainer) {
             if (complaints.length === 0) {
@@ -698,4 +712,185 @@ function escapeHtml(text) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+}
+
+/**
+ * --------------------------------------------------
+ * CHART.JS INTERACTIVE VISUAL ANALYTICS
+ * --------------------------------------------------
+ */
+let statusChartInstance = null;
+let categoryChartInstance = null;
+
+function renderDashboardCharts(complaints) {
+    if (typeof Chart === 'undefined') {
+        console.warn('Chart.js library not loaded yet.');
+        return;
+    }
+
+    const statusCanvas = document.getElementById('statusChart');
+    const categoryCanvas = document.getElementById('categoryChart');
+    if (!statusCanvas || !categoryCanvas) return;
+
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const textColor = isDark ? '#cbd5e1' : '#475569';
+    const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)';
+    const cardBgColor = isDark ? '#151c2c' : '#ffffff';
+
+    // 1. Compute Status Distribution
+    const pending = complaints.filter(c => c.status === 'Pending').length;
+    const progress = complaints.filter(c => c.status === 'In Progress').length;
+    const resolved = complaints.filter(c => c.status === 'Resolved').length;
+    const rejected = complaints.filter(c => c.status === 'Rejected').length;
+    const total = complaints.length;
+
+    // Update Resolution Rate Badge
+    const rateEl = document.getElementById('resolutionRateText');
+    if (rateEl) {
+        const rate = total > 0 ? Math.round((resolved / total) * 100) : 0;
+        rateEl.textContent = `${rate}%`;
+    }
+
+    // 2. Compute Category Breakdown
+    const categoryMap = {};
+    complaints.forEach(c => {
+        const cat = c.category ? c.category.trim() : 'General';
+        categoryMap[cat] = (categoryMap[cat] || 0) + 1;
+    });
+
+    const categoryLabels = Object.keys(categoryMap);
+    const categoryCounts = Object.values(categoryMap);
+
+    // Fallbacks if no data yet
+    const displayStatusLabels = total > 0 ? ['Pending', 'In Progress', 'Resolved', 'Rejected'] : ['No Complaints Yet'];
+    const displayStatusData = total > 0 ? [pending, progress, resolved, rejected] : [1];
+    const displayStatusColors = total > 0
+        ? ['#f59e0b', '#3b82f6', '#10b981', '#ef4444']
+        : [isDark ? '#334155' : '#e2e8f0'];
+
+    const displayCategoryLabels = categoryLabels.length > 0 ? categoryLabels : ['No Categories Yet'];
+    const displayCategoryData = categoryCounts.length > 0 ? categoryCounts : [0];
+
+    // Destroy existing instances on re-render (theme switch or data reload)
+    if (statusChartInstance) {
+        statusChartInstance.destroy();
+    }
+    if (categoryChartInstance) {
+        categoryChartInstance.destroy();
+    }
+
+    // 3. Create Status Doughnut Chart
+    statusChartInstance = new Chart(statusCanvas, {
+        type: 'doughnut',
+        data: {
+            labels: displayStatusLabels,
+            datasets: [{
+                data: displayStatusData,
+                backgroundColor: displayStatusColors,
+                borderColor: cardBgColor,
+                borderWidth: 3,
+                hoverOffset: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: textColor,
+                        font: {
+                            family: 'Inter',
+                            size: 13,
+                            weight: '600'
+                        },
+                        padding: 16,
+                        usePointStyle: true,
+                        pointStyle: 'circle'
+                    }
+                },
+                tooltip: {
+                    backgroundColor: isDark ? '#1e293b' : '#0f172a',
+                    titleColor: '#ffffff',
+                    bodyColor: '#f8fafc',
+                    padding: 12,
+                    cornerRadius: 8,
+                    displayColors: true,
+                    callbacks: {
+                        label: function(context) {
+                            if (total === 0) return ' 0 complaints';
+                            const val = context.raw || 0;
+                            const pct = Math.round((val / total) * 100);
+                            return ` ${context.label}: ${val} (${pct}%)`;
+                        }
+                    }
+                }
+            },
+            cutout: '68%'
+        }
+    });
+
+    // 4. Create Category Horizontal Bar Chart
+    const barPalette = [
+        '#38bdf8', '#6366f1', '#a855f7', '#ec4899', '#f97316', '#10b981', '#14b8a6', '#eab308'
+    ];
+
+    categoryChartInstance = new Chart(categoryCanvas, {
+        type: 'bar',
+        data: {
+            labels: displayCategoryLabels,
+            datasets: [{
+                label: 'Complaints',
+                data: displayCategoryData,
+                backgroundColor: displayCategoryLabels.map((_, i) => barPalette[i % barPalette.length]),
+                borderRadius: 6,
+                borderSkipped: false
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: isDark ? '#1e293b' : '#0f172a',
+                    titleColor: '#ffffff',
+                    bodyColor: '#f8fafc',
+                    padding: 12,
+                    cornerRadius: 8,
+                    callbacks: {
+                        label: function(context) {
+                            return ` ${context.raw} complaint${context.raw === 1 ? '' : 's'}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: textColor,
+                        stepSize: 1,
+                        font: { family: 'Inter', size: 12, weight: '500' }
+                    },
+                    grid: {
+                        color: gridColor
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: textColor,
+                        font: { family: 'Inter', size: 13, weight: '600' }
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
 }

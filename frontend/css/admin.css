@@ -1097,3 +1097,102 @@
 [data-theme="dark"] .admin-details-meta strong {
     color: #f8fafc !important;
 }
+
+/* ==================================================
+   VISUAL ANALYTICS & CHART.JS STYLES
+================================================== */
+.analytics-section {
+    margin-bottom: 35px;
+}
+
+.resolution-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1d4ed8;
+}
+
+.resolution-badge strong {
+    font-size: 16px;
+    font-weight: 800;
+    color: #10b981;
+}
+
+.analytics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.35fr;
+    gap: 25px;
+}
+
+.chart-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-header {
+    margin-bottom: 18px;
+}
+
+.chart-header h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 4px;
+}
+
+.chart-subtitle {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #64748b;
+}
+
+.chart-canvas-wrapper {
+    position: relative;
+    flex: 1;
+    min-height: 290px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 900px) {
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Dark Mode Analytics */
+[data-theme="dark"] .chart-card {
+    background: #151c2c !important;
+    border-color: #273549 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .chart-header h3 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .chart-subtitle {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .resolution-badge {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .resolution-badge strong {
+    color: #34d399 !important;
+}
