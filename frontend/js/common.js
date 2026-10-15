@@ -324,3 +324,27 @@ async function updateNavNotificationBadge() {
         badge.classList.add("hidden");
     }
 }
+// Automatically ensure graduation cap logo icon is in navbar across all pages
+function initNavbarLogoIcon() {
+    const logoEl = document.querySelector('.navbar .logo');
+    if (logoEl && !logoEl.querySelector('.logo-icon')) {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('class', 'logo-icon');
+        svg.setAttribute('width', '28');
+        svg.setAttribute('height', '28');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('stroke', 'currentColor');
+        svg.setAttribute('stroke-width', '2');
+        svg.setAttribute('stroke-linecap', 'round');
+        svg.setAttribute('stroke-linejoin', 'round');
+        svg.innerHTML = '<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>';
+        logoEl.insertBefore(svg, logoEl.firstChild);
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavbarLogoIcon);
+} else {
+    initNavbarLogoIcon();
+}

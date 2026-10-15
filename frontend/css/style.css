@@ -950,3 +950,186 @@ footer {
 [data-theme="dark"] .auth-footer-text {
     color: #94a3b8 !important;
 }
+
+/* ==================================================
+   HOME PAGE DARK THEME COMPLETE CONTRAST FIX
+================================================== */
+[data-theme="dark"] .section {
+    background: #0b0f19 !important;
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .categories-section {
+    background: #0f172a !important;
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .section-heading p {
+    color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .section-heading h2 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .hero-tag {
+    color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .hero h1 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .hero h1 span {
+    color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .hero-description {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .hero-card {
+    background: #151c2c !important;
+    border: 1px solid #273549 !important;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .hero-card h3 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .hero-card p {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .complaint-icon {
+    background: #1e293b !important;
+    color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .status-box {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .status-box span {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .status-box strong {
+    color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .secondary-btn {
+    background: #1e293b !important;
+    color: #f8fafc !important;
+    border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .secondary-btn:hover {
+    background: #273549 !important;
+    border-color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .step-card {
+    background: #151c2c !important;
+    border: 1px solid #273549 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .step-number {
+    color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .step-card h3 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .step-card p {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .category-card {
+    background: #151c2c !important;
+    border: 1px solid #273549 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .category-card:hover {
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6) !important;
+    border-color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .category-card h3 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .category-card p {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .cta {
+    background: linear-gradient(135deg, #111827 0%, #1e293b 100%) !important;
+    border-top: 1px solid #273549 !important;
+    border-bottom: 1px solid #273549 !important;
+}
+
+[data-theme="dark"] .cta h2 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .cta p {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] footer {
+    background: #080c14 !important;
+    border-top: 1px solid #1f2937 !important;
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] footer h3,
+[data-theme="dark"] footer h4 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] footer p,
+[data-theme="dark"] footer a {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] footer a:hover {
+    color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .footer-bottom p {
+    color: #64748b !important;
+}
+
+/* Navbar Logo & Icon */
+.navbar .logo {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    text-decoration: none !important;
+}
+
+.navbar .logo-icon {
+    width: 28px !important;
+    height: 28px !important;
+    color: #2563eb !important;
+    stroke: #2563eb !important;
+    flex-shrink: 0 !important;
+    transition: transform 0.2s ease, color 0.2s ease !important;
+}
+
+[data-theme="dark"] .navbar .logo,
+[data-theme="dark"] .navbar .logo span {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .navbar .logo-icon {
+    color: #38bdf8 !important;
+    stroke: #38bdf8 !important;
+    filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.4)) !important;
+}
