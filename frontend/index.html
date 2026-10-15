@@ -13,30 +13,33 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 23px;
+            font-size: 22px;
             font-weight: 700;
             color: #172554;
+            text-decoration: none;
         }
 
-        .navbar .logo img {
-            width: 55px;
-            height: 55px;
-            object-fit: contain;
+        .navbar .logo-icon {
+            width: 32px;
+            height: 32px;
+            color: #2563eb;
+            stroke: #2563eb;
+            flex-shrink: 0;
         }
 
         .navbar .logo span {
-            color: #2563eb;
+            color: #172554;
         }
 
         @media (max-width: 600px) {
             .navbar .logo {
-                font-size: 18px;
+                font-size: 17px;
                 gap: 8px;
             }
 
-            .navbar .logo img {
-                width: 42px;
-                height: 42px;
+            .navbar .logo-icon {
+                width: 26px;
+                height: 26px;
             }
         }
     </style>
