@@ -1,3 +1,62 @@
+
+/*
+==================================================
+  DARK MODE THEME CONTROLLER
+==================================================
+*/
+// Immediately apply saved theme on parse to avoid flash
+(function() {
+    try {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    } catch (e) {}
+})();
+
+// Automatically inject and manage theme toggle button in navbar
+function initThemeToggle() {
+    if (document.getElementById('themeToggleBtn')) return;
+
+    const navContainer = document.querySelector('.navbar .nav-links') || 
+                         document.querySelector('.navbar nav') || 
+                         document.querySelector('.navbar');
+
+    if (!navContainer) return;
+
+    const toggleBtn = document.createElement('button');
+    toggleBtn.id = 'themeToggleBtn';
+    toggleBtn.className = 'theme-toggle-btn';
+    toggleBtn.setAttribute('type', 'button');
+    toggleBtn.setAttribute('aria-label', 'Toggle Dark / Light Theme');
+    toggleBtn.setAttribute('title', 'Toggle Theme');
+
+    toggleBtn.innerHTML = `
+        <span class="theme-icon-light">☀️</span>
+        <span class="theme-icon-dark">🌙</span>
+    `;
+
+    toggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        try {
+            localStorage.setItem('theme', newTheme);
+        } catch (err) {}
+    });
+
+    navContainer.appendChild(toggleBtn);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initThemeToggle);
+} else {
+    initThemeToggle();
+}
+
 /*
 ==================================================
   CAMPUS COMPLAINT SYSTEM - COMMON API & HELPERS
