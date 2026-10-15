@@ -55,17 +55,19 @@
         <!-- Search and Filters -->
         <section class="admin-section">
 
-            <div class="section-heading">
-
+            <div class="section-heading" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
                 <div>
                     <h2>Complaint Records</h2>
-
                     <p>
-                        <span id="complaintCount">0</span>
-                        complaints found
+                        <span id="complaintCount">0</span> complaints found
                     </p>
                 </div>
 
+                <div class="export-actions">
+                    <button type="button" id="exportCsvBtn" class="admin-export-btn" title="Export current filtered complaints to CSV / Excel spreadsheet">
+                        <span>📥</span> Export to CSV / Excel
+                    </button>
+                </div>
             </div>
 
 

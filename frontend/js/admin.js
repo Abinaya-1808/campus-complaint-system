@@ -97,6 +97,16 @@ async function initAdminDashboard() {
         updateElementText("mediumComplaints", medium);
         updateElementText("lowComplaints", low);
 
+        // Attach Dashboard CSV Export Listener
+        const dashExportBtn = document.getElementById("exportDashboardCsvBtn");
+        if (dashExportBtn) {
+            dashExportBtn.addEventListener("click", function(e) {
+                e.preventDefault();
+                exportComplaintsToCSV(complaints, "campus_complaints_all");
+            });
+        }
+
+
         // Initialize Interactive Charts
         renderDashboardCharts(complaints);
         // Re-render charts on theme change for instant color harmony
@@ -190,6 +200,11 @@ async function initAdminComplaintsList() {
     try {
         const response = await apiFetch("/complaints");
         const allComplaints = (response && response.complaints) ? response.complaints : [];
+        let currentlyFilteredList = allComplaints;
+
+        function getCurrentlyFilteredComplaints() {
+            return currentlyFilteredList;
+        }
 
         function displayComplaints() {
             const searchValue = searchInput ? searchInput.value.trim().toLowerCase() : "";
@@ -220,6 +235,7 @@ async function initAdminComplaintsList() {
                 return matchesSearch && matchesStatus && matchesCategory && matchesPriority;
             });
 
+            currentlyFilteredList = filteredComplaints;
             if (complaintCount) {
                 complaintCount.textContent = filteredComplaints.length;
             }
@@ -305,6 +321,17 @@ async function initAdminComplaintsList() {
         }
 
         displayComplaints();
+
+        // Attach Complaints List CSV Export Listener (exports currently filtered set)
+        const exportBtn = document.getElementById("exportCsvBtn");
+        if (exportBtn) {
+            exportBtn.addEventListener("click", function(e) {
+                e.preventDefault();
+                const filtered = getCurrentlyFilteredComplaints();
+                exportComplaintsToCSV(filtered, "campus_complaints_filtered");
+            });
+        }
+
 
         if (searchInput) searchInput.addEventListener("input", displayComplaints);
         if (statusFilter) statusFilter.addEventListener("change", displayComplaints);
@@ -893,4 +920,101 @@ function renderDashboardCharts(complaints) {
             }
         }
     });
+}
+
+/**
+ * --------------------------------------------------
+ * CSV / EXCEL REPORT EXPORT ENGINE
+ * --------------------------------------------------
+ */
+function exportComplaintsToCSV(complaintsToExport, filenamePrefix = "campus_complaints") {
+    if (!complaintsToExport || complaintsToExport.length === 0) {
+        if (typeof showToast === "function") {
+            showToast("No complaint records available to export.", "warning", "Export Empty");
+        } else {
+            alert("No complaint records available to export.");
+        }
+        return;
+    }
+
+    // CSV Column Headers
+    const headers = [
+        "Ticket ID",
+        "Title",
+        "Category",
+        "Priority",
+        "Status",
+        "Anonymous",
+        "Student Name",
+        "Register Number / ID",
+        "Student Email",
+        "Submitted Date",
+        "Description",
+        "Photo Attached",
+        "Resolution Rating",
+        "Student Feedback",
+        "Admin Responses Count",
+        "Last Updated"
+    ];
+
+    // Helper to escape CSV cells according to RFC 4180
+    function escapeCSV(val) {
+        if (val === null || val === undefined) return '""';
+        const str = String(val).replace(/"/g, '""');
+        return `"${str}"`;
+    }
+
+    const rows = complaintsToExport.map(c => {
+        const student = c.student || {};
+        const isAnon = !!c.isAnonymous;
+        const studentName = isAnon ? "Anonymous Student" : (student.name || c.studentName || "N/A");
+        const studentReg = isAnon ? "Protected" : (student.registerNumber || student.studentId || c.registerNumber || "N/A");
+        const studentEmail = isAnon ? "Protected" : (student.email || c.studentEmail || "N/A");
+        const dateStr = c.createdAt ? new Date(c.createdAt).toLocaleString("en-IN") : "N/A";
+        const updatedStr = c.updatedAt ? new Date(c.updatedAt).toLocaleString("en-IN") : "N/A";
+        const hasPhoto = c.image ? "Yes" : "No";
+        const cleanDesc = (c.description || "").replace(/\r?\n/g, " ");
+        const ratingStr = c.rating ? `${c.rating} / 5 Stars` : "Unrated";
+        const cleanFeedback = (c.feedback || "").replace(/\r?\n/g, " ");
+        const responseCount = Array.isArray(c.responses) ? c.responses.length : 0;
+
+        return [
+            escapeCSV(c._id || c.id || "N/A"),
+            escapeCSV(c.title || "Untitled"),
+            escapeCSV(c.category || "General"),
+            escapeCSV(c.priority || "Medium"),
+            escapeCSV(c.status || "Pending"),
+            escapeCSV(isAnon ? "Yes" : "No"),
+            escapeCSV(studentName),
+            escapeCSV(studentReg),
+            escapeCSV(studentEmail),
+            escapeCSV(dateStr),
+            escapeCSV(cleanDesc),
+            escapeCSV(hasPhoto),
+            escapeCSV(ratingStr),
+            escapeCSV(cleanFeedback),
+            escapeCSV(responseCount),
+            escapeCSV(updatedStr)
+        ].join(",");
+    });
+
+    // Add UTF-8 BOM so Microsoft Excel cleanly renders Unicode characters
+    const csvContent = "\uFEFF" + [headers.map(escapeCSV).join(","), ...rows].join("\r\n");
+
+    const dateSlug = new Date().toISOString().slice(0, 10);
+    const fileName = `${filenamePrefix}_${dateSlug}.csv`;
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const blobUrl = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = blobUrl;
+    link.setAttribute("download", fileName);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(blobUrl);
+
+    if (typeof showToast === "function") {
+        showToast(`Successfully exported ${complaintsToExport.length} complaint${complaintsToExport.length === 1 ? '' : 's'} to CSV spreadsheet.`, "success", "Report Exported", 4000);
+    }
 }
