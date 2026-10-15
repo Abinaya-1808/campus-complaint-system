@@ -74,6 +74,10 @@ const complaintSchema = new mongoose.Schema({
     required: [true, 'Complaint description is required'],
     trim: true
   },
+  image: {
+    type: String,
+    default: ''
+  },
   isAnonymous: {
     type: Boolean,
     default: false

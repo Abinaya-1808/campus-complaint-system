@@ -214,9 +214,17 @@
                         accept="image/*"
                     >
 
-                    <small>
+                                        <small>
                         You may upload an image related to your complaint.
                     </small>
+
+                    <!-- LIVE IMAGE PREVIEW CONTAINER -->
+                    <div id="imagePreviewContainer" class="image-preview-container" style="display: none;">
+                        <div class="image-preview-box">
+                            <img id="imagePreview" src="" alt="Selected Evidence Preview">
+                            <button type="button" id="removeImageBtn" class="remove-image-btn" title="Remove photo">✕ Remove Photo</button>
+                        </div>
+                    </div>
 
                 </div>
 

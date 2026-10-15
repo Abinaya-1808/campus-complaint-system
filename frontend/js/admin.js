@@ -475,6 +475,20 @@ async function initAdminComplaintDetails() {
                     </div>
                 </section>
 
+                
+                <!-- ATTACHED PHOTO -->
+                ${complaint.image ? `
+                    <section class="admin-details-section">
+                        <h2>Attached Evidence Photo</h2>
+                        <div class="attached-evidence-card" style="margin-top: 0;">
+                            <a href="${complaint.image}" target="_blank" title="Click to view full image in a new tab">
+                                <img src="${complaint.image}" alt="Complaint Evidence Photo" class="attached-evidence-img">
+                            </a>
+                            <p style="font-size: 12px; color: #64748b; margin-top: 6px;">Click the photo to open full size.</p>
+                        </div>
+                    </section>
+                ` : ""}
+
                 <!-- DESCRIPTION -->
                 <section class="admin-details-section">
                     <h2>Complaint Description</h2>

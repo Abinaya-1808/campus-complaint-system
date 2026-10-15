@@ -24,7 +24,7 @@ const createComplaint = async (req, res) => {
       });
     }
 
-    const { title, category, location, description, priority, isAnonymous } = req.body;
+    const { title, category, location, description, priority, isAnonymous, image } = req.body;
 
     const newComplaint = new Complaint({
       title: title.trim(),
@@ -33,6 +33,7 @@ const createComplaint = async (req, res) => {
       description: description.trim(),
       priority: priority || 'Medium',
       isAnonymous: Boolean(isAnonymous),
+      image: (typeof image === 'string' && image.startsWith('data:image/')) ? image : '',
       status: 'Pending',
       student: req.user._id,
       statusTimeline: [

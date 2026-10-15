@@ -55,6 +55,74 @@ function normalizeCategory(category) {
  * Connects Submit Complaint form to POST /api/complaints
  */
 function initComplaintForm(currentUser) {
+    
+    let compressedImageData = "";
+    const evidenceInput = document.getElementById("evidence");
+    const previewContainer = document.getElementById("imagePreviewContainer");
+    const previewImg = document.getElementById("imagePreview");
+    const removeBtn = document.getElementById("removeImageBtn");
+
+    if (evidenceInput) {
+        evidenceInput.addEventListener("change", function(e) {
+            const file = e.target.files && e.target.files[0];
+            if (!file) {
+                compressedImageData = "";
+                if (previewContainer) previewContainer.style.display = "none";
+                return;
+            }
+
+            if (!file.type.startsWith("image/")) {
+                alert("Please select a valid image file (PNG, JPG, JPEG, WebP).");
+                evidenceInput.value = "";
+                compressedImageData = "";
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    const maxDim = 1000;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > maxDim || height > maxDim) {
+                        if (width > height) {
+                            height = Math.round((height * maxDim) / width);
+                            width = maxDim;
+                        } else {
+                            width = Math.round((width * maxDim) / height);
+                            height = maxDim;
+                        }
+                    }
+
+                    const canvas = document.createElement("canvas");
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0, width, height);
+                    compressedImageData = canvas.toDataURL("image/jpeg", 0.78);
+
+                    if (previewImg && previewContainer) {
+                        previewImg.src = compressedImageData;
+                        previewContainer.style.display = "block";
+                    }
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    if (removeBtn) {
+        removeBtn.addEventListener("click", function() {
+            if (evidenceInput) evidenceInput.value = "";
+            compressedImageData = "";
+            if (previewContainer) previewContainer.style.display = "none";
+            if (previewImg) previewImg.src = "";
+        });
+    }
+
     const complaintForm = document.getElementById("complaintForm");
     if (!complaintForm) return;
 
@@ -99,7 +167,8 @@ function initComplaintForm(currentUser) {
                 priority,
                 location,
                 description,
-                isAnonymous
+                isAnonymous,
+                image: compressedImageData
             };
 
             const response = await apiFetch("/complaints", {
