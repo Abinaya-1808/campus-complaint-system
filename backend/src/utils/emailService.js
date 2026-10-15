@@ -1,35 +1,34 @@
 const nodemailer = require('nodemailer');
 
-/**
- * Checks whether SMTP credentials are provided in environment variables
- */
-function isEmailConfigured() {
-  const user = process.env.EMAIL_USER;
-  const pass = process.env.EMAIL_PASS || process.env.EMAIL_APP_PASSWORD;
-  return Boolean(user && user.trim().length > 0 && pass && pass.trim().length > 0);
+function getCleanCredentials() {
+  let user = (process.env.EMAIL_USER || '').trim().replace(/^['"]+|['"]+$/g, '');
+  let pass = (process.env.EMAIL_PASS || process.env.EMAIL_APP_PASSWORD || '').trim().replace(/^['"]+|['"]+$/g, '');
+  pass = pass.replace(/\s+/g, '');
+  return { user, pass };
 }
 
-/**
- * Creates and returns a Nodemailer transporter instance based on environment variables
- */
+function isEmailConfigured() {
+  const { user, pass } = getCleanCredentials();
+  return Boolean(user && user.length > 0 && pass && pass.length > 0);
+}
+
 function createTransporter() {
   if (!isEmailConfigured()) {
     return null;
   }
 
-  const user = (process.env.EMAIL_USER || '').trim();
-  const pass = (process.env.EMAIL_PASS || process.env.EMAIL_APP_PASSWORD || '').trim();
-  const service = process.env.EMAIL_SERVICE ? process.env.EMAIL_SERVICE.trim().toLowerCase() : null;
+  const { user, pass } = getCleanCredentials();
+  const service = process.env.EMAIL_SERVICE ? process.env.EMAIL_SERVICE.trim().toLowerCase().replace(/^['"]+|['"]+$/g, '') : null;
 
-  if (service) {
+  if (service && service === 'gmail') {
     return nodemailer.createTransport({
-      service,
+      service: 'gmail',
       auth: { user, pass }
     });
   }
 
-  const host = (process.env.EMAIL_HOST || 'smtp.gmail.com').trim();
-  const port = parseInt(process.env.EMAIL_PORT, 10) || 587;
+  const host = (process.env.EMAIL_HOST || 'smtp.gmail.com').trim().replace(/^['"]+|['"]+$/g, '');
+  const port = parseInt(process.env.EMAIL_PORT, 10) || 465;
   const secure = process.env.EMAIL_SECURE === 'true' || port === 465;
 
   return nodemailer.createTransport({
@@ -56,9 +55,6 @@ function getTransporter() {
   return transporter;
 }
 
-/**
- * Safely masks email for log outputs without exposing full address
- */
 function maskEmail(email) {
   if (!email || typeof email !== 'string') return 'unknown';
   const parts = email.split('@');
@@ -69,9 +65,6 @@ function maskEmail(email) {
   return `${maskedName}@${domain}`;
 }
 
-/**
- * Low-level email sending helper
- */
 async function sendMail({ to, subject, html, text }) {
   if (!isEmailConfigured()) {
     console.log('[EmailService] Email sending skipped: EMAIL_USER or EMAIL_PASS not configured in environment.');
@@ -89,8 +82,11 @@ async function sendMail({ to, subject, html, text }) {
     return { sent: false, reason: 'transporter_unavailable' };
   }
 
-  const senderUser = (process.env.EMAIL_USER || '').trim();
-  const from = process.env.EMAIL_FROM || `"Campus Complaint System" <${senderUser}>`;
+  const { user } = getCleanCredentials();
+  let from = (process.env.EMAIL_FROM || '').trim().replace(/^['"]+|['"]+$/g, '');
+  if (!from) {
+    from = `"Campus Complaint System" <${user}>`;
+  }
 
   const mailOptions = {
     from,
@@ -110,11 +106,30 @@ async function sendMail({ to, subject, html, text }) {
   }
 }
 
+async function verifyEmailConfig() {
+  if (!isEmailConfigured()) {
+    const { user, pass } = getCleanCredentials();
+    return { 
+      configured: false, 
+      hasUser: Boolean(user), 
+      hasPass: Boolean(pass),
+      error: 'EMAIL_USER or EMAIL_PASS not set in environment variables' 
+    };
+  }
+  const currentTransporter = getTransporter();
+  if (!currentTransporter) {
+    return { configured: false, error: 'Could not create transport' };
+  }
+  try {
+    await currentTransporter.verify();
+    return { configured: true, verified: true };
+  } catch (err) {
+    return { configured: true, verified: false, error: err.message };
+  }
+}
+
 const FRONTEND_BASE_URL = (process.env.FRONTEND_URL || 'https://campus-complaint-system-frontend.vercel.app').replace(/\/+$/, '');
 
-/**
- * Generates reusable responsive HTML email wrapper
- */
 function wrapHtmlEmail({ title, preheader, bodyContent, ctaText, ctaUrl }) {
   return `<!DOCTYPE html>
 <html lang="en">
@@ -170,9 +185,6 @@ function wrapHtmlEmail({ title, preheader, bodyContent, ctaText, ctaUrl }) {
 </html>`;
 }
 
-/**
- * 1. Status Update Email: Sent when status is updated to 'In Progress', 'Resolved', or 'Rejected'
- */
 async function sendStatusUpdateEmail(student, complaint, newStatus, adminNote) {
   if (!student || !student.email) return { sent: false, reason: 'missing_student_email' };
 
@@ -256,9 +268,6 @@ Campus Complaint System`;
   return await sendMail({ to: student.email, subject, html, text });
 }
 
-/**
- * 2. Admin Response Email: Sent when an admin replies to a complaint
- */
 async function sendAdminReplyEmail(student, complaint, replyMessage) {
   if (!student || !student.email) return { sent: false, reason: 'missing_student_email' };
 
@@ -315,9 +324,6 @@ Campus Complaint System`;
   return await sendMail({ to: student.email, subject, html, text });
 }
 
-/**
- * 3. Complaint Submission Confirmation Email: Sent upon new complaint submission
- */
 async function sendComplaintConfirmationEmail(student, complaint) {
   if (!student || !student.email) return { sent: false, reason: 'missing_student_email' };
 
@@ -383,6 +389,8 @@ Campus Complaint System`;
 module.exports = {
   isEmailConfigured,
   sendMail,
+  verifyEmailConfig,
+  maskEmail,
   sendStatusUpdateEmail,
   sendAdminReplyEmail,
   sendComplaintConfirmationEmail

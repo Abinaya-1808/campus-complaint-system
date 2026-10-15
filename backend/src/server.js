@@ -6,6 +6,7 @@ const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const complaintRoutes = require('./routes/complaintRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
+const { isEmailConfigured, verifyEmailConfig, maskEmail } = require('./utils/emailService');
 
 // Load environment variables
 dotenv.config();
@@ -35,13 +36,20 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 connectDB();
 
 // Health Check Endpoint
-app.get('/api/health', (req, res) => {
+app.get('/api/health', async (req, res) => {
   const dbStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
+  const emailStatus = await verifyEmailConfig().catch(err => ({ configured: false, error: err.message }));
   res.status(200).json({
     status: 'OK',
     message: 'Campus Complaint System API is running',
     timestamp: new Date().toISOString(),
-    database: dbStatus
+    database: dbStatus,
+    emailService: {
+      configured: isEmailConfigured(),
+      verified: Boolean(emailStatus.verified),
+      user: maskEmail(process.env.EMAIL_USER),
+      error: emailStatus.error || null
+    }
   });
 });
 
