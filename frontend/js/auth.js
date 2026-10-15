@@ -137,6 +137,7 @@ function initRegisterForm() {
                 errorText = err.data.errors.map(e => e.msg || e.message).join("<br>");
             }
             displayMessage(messageEl, errorText, "error");
+            showToast(errorText, "error", "Login Failed");
             submitBtn.disabled = false;
             submitBtn.textContent = originalBtnText;
         }
@@ -219,11 +220,8 @@ function initLoginForm() {
             // Save session securely (stores token & public profile; NEVER stores passwords)
             setSession(token, user);
 
-            displayMessage(
-                messageEl,
-                `Login successful! Welcome, ${user.name}. Redirecting...`,
-                "success"
-            );
+            displayMessage(messageEl, `Login successful! Welcome, ${user.name}. Redirecting...`, "success");
+            showToast(`Welcome back, ${user.name}! Redirecting...`, "success", "Login Successful");
 
             // Redirect according to the verified account role
             setTimeout(function () {

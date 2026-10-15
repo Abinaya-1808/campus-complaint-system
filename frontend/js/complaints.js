@@ -185,6 +185,7 @@ function initComplaintForm(currentUser) {
                     `<strong>Complaint submitted successfully!</strong><br>Complaint ID: <code>${escapeHtml(complaintId)}</code>${attachmentNotice}`,
                     "success"
                 );
+                showToast('Complaint submitted successfully! Redirecting...', 'success', 'Success');
 
                 complaintForm.reset();
 
@@ -200,6 +201,7 @@ function initComplaintForm(currentUser) {
                 errorText = err.data.errors.map(e => e.message || e.msg).join("<br>");
             }
             displayMessage(messageEl, errorText, "error");
+            showToast(errorText, 'error', 'Submission Failed');
             submitBtn.disabled = false;
             submitBtn.textContent = originalBtnText;
         }

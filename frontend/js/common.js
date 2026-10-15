@@ -1,6 +1,78 @@
 
 /*
 ==================================================
+  MODERN FLOATING TOAST NOTIFICATION SYSTEM
+==================================================
+*/
+function showToast(message, type = 'success', title = null, duration = 4000) {
+    let container = document.getElementById('toastContainer');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toastContainer';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `toast-item toast-${type}`;
+
+    const iconMap = {
+        success: '✓',
+        error: '✕',
+        warning: '⚠️',
+        info: 'ℹ️'
+    };
+
+    const defaultTitleMap = {
+        success: 'Success',
+        error: 'Error',
+        warning: 'Attention',
+        info: 'Information'
+    };
+
+    const toastTitle = title || defaultTitleMap[type] || 'Notice';
+    const icon = iconMap[type] || 'ℹ️';
+
+    toast.innerHTML = `
+        <div class="toast-icon-wrapper">${icon}</div>
+        <div class="toast-content">
+            <div class="toast-title">${escapeHtml(toastTitle)}</div>
+            <div class="toast-message">${message}</div>
+        </div>
+        <button type="button" class="toast-close" aria-label="Close notification">×</button>
+        <div class="toast-progress-bar" style="animation-duration: ${duration}ms;"></div>
+    `;
+
+    const closeBtn = toast.querySelector('.toast-close');
+    let autoCloseTimer;
+
+    function dismiss() {
+        clearTimeout(autoCloseTimer);
+        toast.classList.add('toast-hiding');
+        setTimeout(() => {
+            if (toast.parentElement) {
+                toast.parentElement.removeChild(toast);
+            }
+        }, 300);
+    }
+
+    closeBtn.addEventListener('click', dismiss);
+
+    container.appendChild(toast);
+
+    // Trigger enter animation on next frame
+    requestAnimationFrame(() => {
+        toast.classList.add('toast-showing');
+    });
+
+    if (duration > 0) {
+        autoCloseTimer = setTimeout(dismiss, duration);
+    }
+}
+
+
+/*
+==================================================
   DARK MODE THEME CONTROLLER
 ==================================================
 */
@@ -45,6 +117,7 @@ function initThemeToggle() {
         document.documentElement.setAttribute('data-theme', newTheme);
         try {
             localStorage.setItem('theme', newTheme);
+        showToast(`Switched to ${newTheme === 'dark' ? 'Dark' : 'Light'} Mode`, 'info', 'Theme Updated', 2500);
         } catch (err) {}
     });
 
