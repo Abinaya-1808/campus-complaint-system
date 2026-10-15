@@ -922,3 +922,31 @@ footer {
         max-width: none;
     }
 }
+
+
+/* Auth Dark Mode Support */
+[data-theme="dark"] .auth-page {
+    background: #0b0f19 !important;
+}
+
+[data-theme="dark"] .auth-container {
+    background: #151c2c !important;
+    border-color: #273549 !important;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .auth-header h1 {
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .auth-header p {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .form-group label {
+    color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .auth-footer-text {
+    color: #94a3b8 !important;
+}

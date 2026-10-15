@@ -74,9 +74,7 @@ function showToast(message, type = 'success', title = null, duration = 4000) {
     container.appendChild(toast);
 
     // Trigger enter animation on next frame
-    requestAnimationFrame(() => {
-        toast.classList.add('toast-showing');
-    });
+    setTimeout(() => { toast.classList.add('toast-showing'); }, 20);
 
     if (duration > 0) {
         autoCloseTimer = setTimeout(dismiss, duration);
@@ -130,7 +128,7 @@ function initThemeToggle() {
         document.documentElement.setAttribute('data-theme', newTheme);
         try {
             localStorage.setItem('theme', newTheme);
-        showToast(`Switched to ${newTheme === 'dark' ? 'Dark' : 'Light'} Mode`, 'info', 'Theme Updated', 2500);
+        showToast(`Switched to ${newTheme === 'dark' ? 'Dark' : 'Light'} Mode`, 'info', 'Theme Updated', 3500);
         } catch (err) {}
     });
 
