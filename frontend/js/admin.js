@@ -62,11 +62,9 @@ async function initAdminDashboard() {
     if (!totalEl && !recentContainer) return;
 
     if (recentContainer) {
-        recentContainer.innerHTML = `
-            <div class="admin-empty">
-                <p>Loading dashboard metrics and recent complaints...</p>
-            </div>
-        `;
+        recentContainer.innerHTML = (typeof getRecentComplaintsSkeletonHTML === "function")
+            ? getRecentComplaintsSkeletonHTML(4, true)
+            : '<div class="admin-empty"><p>Loading dashboard metrics and recent complaints...</p></div>';
     }
 
     try {
@@ -192,11 +190,9 @@ async function initAdminComplaintsList() {
     const priorityFilter = document.getElementById("priorityFilter");
     const complaintCount = document.getElementById("complaintCount");
 
-    complaintsList.innerHTML = `
-        <div class="admin-empty">
-            <p>Loading complaints from server...</p>
-        </div>
-    `;
+    complaintsList.innerHTML = (typeof getComplaintSkeletonHTML === "function")
+        ? getComplaintSkeletonHTML(4, true)
+        : '<div class="admin-empty"><p>Loading complaints from server...</p></div>';
 
     try {
         const response = await apiFetch("/complaints");
@@ -379,11 +375,9 @@ async function initAdminComplaintDetails() {
         return;
     }
 
-    adminDetailsContent.innerHTML = `
-        <div class="admin-empty">
-            <p>Loading complaint details from server...</p>
-        </div>
-    `;
+    adminDetailsContent.innerHTML = (typeof getComplaintDetailsSkeletonHTML === "function")
+        ? getComplaintDetailsSkeletonHTML(true)
+        : '<div class="admin-empty"><p>Loading complaint details from server...</p></div>';
 
     try {
         const response = await apiFetch(`/complaints/${encodeURIComponent(complaintId)}`);

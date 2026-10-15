@@ -215,14 +215,16 @@ async function initMyComplaints() {
     const complaintsList = document.getElementById("complaintsList");
     if (!complaintsList) return;
 
-    // Loading State
-    complaintsList.innerHTML = `
-        <div class="empty-state">
-            <div class="empty-icon">⏳</div>
-            <h3>Loading complaints...</h3>
-            <p>Fetching your complaints from the server.</p>
-        </div>
-    `;
+    // Loading State with Skeleton Cards
+    complaintsList.innerHTML = (typeof getComplaintSkeletonHTML === "function")
+        ? getComplaintSkeletonHTML(3, false)
+        : `
+            <div class="empty-state">
+                <div class="empty-icon">⏳</div>
+                <h3>Loading complaints...</h3>
+                <p>Fetching your complaints from the server.</p>
+            </div>
+        `;
 
     try {
         const response = await apiFetch("/complaints");
@@ -343,14 +345,16 @@ async function initComplaintDetails(currentUser) {
         return;
     }
 
-    // Loading State
-    detailsContent.innerHTML = `
-        <div class="empty-state">
-            <div class="empty-icon">⏳</div>
-            <h3>Loading complaint details...</h3>
-            <p>Fetching details from server.</p>
-        </div>
-    `;
+    // Loading State with Skeleton Details
+    detailsContent.innerHTML = (typeof getComplaintDetailsSkeletonHTML === "function")
+        ? getComplaintDetailsSkeletonHTML(false)
+        : `
+            <div class="empty-state">
+                <div class="empty-icon">⏳</div>
+                <h3>Loading complaint details...</h3>
+                <p>Fetching details from server.</p>
+            </div>
+        `;
 
     try {
         const response = await apiFetch(`/complaints/${encodeURIComponent(complaintId)}`);

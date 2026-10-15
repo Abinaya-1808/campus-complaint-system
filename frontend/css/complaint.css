@@ -787,3 +787,10 @@ main form a:hover {
 [data-theme="dark"] .detail-item strong {
     color: #ffffff !important;
 }
+
+/* Skeleton Loading Complaint Enhancements */
+.complaint-card.skeleton-card {
+    cursor: default;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+

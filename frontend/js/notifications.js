@@ -49,12 +49,14 @@ async function loadNotifications() {
 
     if (!list) return;
 
-    // Loading State
-    list.innerHTML = `
-        <div class="notifications-empty">
-            <p>Loading notifications from server...</p>
-        </div>
-    `;
+    // Loading State with Skeleton Cards
+    list.innerHTML = (typeof getNotificationsSkeletonHTML === "function")
+        ? getNotificationsSkeletonHTML(4)
+        : `
+            <div class="notifications-empty">
+                <p>Loading notifications from server...</p>
+            </div>
+        `;
 
     try {
         const response = await apiFetch("/notifications");

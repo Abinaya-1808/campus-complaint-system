@@ -62,6 +62,10 @@ async function loadComplaintStats() {
         return;
     }
 
+    if (recentEl && typeof getRecentComplaintsSkeletonHTML === "function") {
+        recentEl.innerHTML = getRecentComplaintsSkeletonHTML(3, false);
+    }
+
     try {
         const response = await apiFetch("/complaints");
         const complaints = (response && response.complaints) ? response.complaints : [];

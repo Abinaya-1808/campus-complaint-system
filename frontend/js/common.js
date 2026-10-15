@@ -377,3 +377,203 @@ function getDepartmentForCategory(category) {
     }
     return 'Dean of Student Affairs';
 }
+
+/* ==================================================
+   REUSABLE SKELETON LOADING TEMPLATES
+================================================== */
+
+/**
+ * Returns skeleton HTML for complaints list
+ * @param {number} count Number of cards
+ * @param {boolean} isAdmin Whether to render admin or student layout
+ */
+function getComplaintSkeletonHTML(count = 3, isAdmin = true) {
+    let cards = '';
+    for (let i = 0; i < count; i++) {
+        if (isAdmin) {
+            cards += `
+                <div class="admin-complaint-card skeleton-card" aria-hidden="true">
+                    <div class="admin-complaint-header">
+                        <div style="flex: 1; max-width: 65%;">
+                            <div class="skeleton skeleton-title" style="width: 65%; height: 22px; margin-bottom: 8px;"></div>
+                            <div class="skeleton skeleton-subtitle" style="width: 35%; height: 12px; margin-bottom: 0;"></div>
+                        </div>
+                        <div class="skeleton skeleton-badge" style="width: 88px; height: 26px;"></div>
+                    </div>
+                    <div class="admin-complaint-info">
+                        <div class="admin-info-item">
+                            <div class="skeleton" style="width: 55px; height: 11px; margin-bottom: 8px;"></div>
+                            <div class="skeleton" style="width: 75%; height: 18px;"></div>
+                        </div>
+                        <div class="admin-info-item">
+                            <div class="skeleton" style="width: 45px; height: 11px; margin-bottom: 8px;"></div>
+                            <div class="skeleton" style="width: 65%; height: 18px;"></div>
+                        </div>
+                        <div class="admin-info-item">
+                            <div class="skeleton" style="width: 55px; height: 11px; margin-bottom: 8px;"></div>
+                            <div class="skeleton" style="width: 80%; height: 18px;"></div>
+                        </div>
+                        <div class="admin-info-item">
+                            <div class="skeleton" style="width: 65px; height: 11px; margin-bottom: 8px;"></div>
+                            <div class="skeleton" style="width: 70%; height: 18px;"></div>
+                        </div>
+                    </div>
+                    <div class="admin-complaint-footer">
+                        <div class="skeleton" style="width: 190px; height: 15px;"></div>
+                        <div class="skeleton skeleton-btn" style="width: 110px; height: 36px;"></div>
+                    </div>
+                </div>
+            `;
+        } else {
+            cards += `
+                <div class="complaint-card skeleton-card" aria-hidden="true" style="margin-bottom: 20px;">
+                    <div class="complaint-card-header">
+                        <div style="flex: 1; max-width: 65%;">
+                            <div class="skeleton skeleton-title" style="width: 70%; height: 22px; margin-bottom: 8px;"></div>
+                            <div class="skeleton skeleton-subtitle" style="width: 40%; height: 12px; margin-bottom: 0;"></div>
+                        </div>
+                        <div class="skeleton skeleton-badge" style="width: 88px; height: 26px;"></div>
+                    </div>
+                    <div class="complaint-meta" style="gap: 16px; margin: 15px 0;">
+                        <div class="skeleton" style="width: 120px; height: 16px;"></div>
+                        <div class="skeleton" style="width: 110px; height: 16px;"></div>
+                        <div class="skeleton" style="width: 130px; height: 16px;"></div>
+                        <div class="skeleton" style="width: 95px; height: 16px;"></div>
+                    </div>
+                    <div class="skeleton skeleton-btn" style="width: 120px; height: 38px; align-self: flex-start; margin-top: 10px;"></div>
+                </div>
+            `;
+        }
+    }
+    return isAdmin ? `<div class="admin-complaint-list">${cards}</div>` : cards;
+}
+
+/**
+ * Returns skeleton HTML for single complaint details view
+ * @param {boolean} isAdmin
+ */
+function getComplaintDetailsSkeletonHTML(isAdmin = true) {
+    return `
+        <div class="skeleton-detail-wrapper" aria-hidden="true">
+            <section class="${isAdmin ? 'admin-details-section' : 'details-section'}" style="margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <div class="skeleton skeleton-title" style="width: 60%; height: 30px; margin-bottom: 10px;"></div>
+                        <div class="skeleton skeleton-subtitle" style="width: 35%; height: 14px;"></div>
+                    </div>
+                    <div class="skeleton skeleton-badge" style="width: 100px; height: 32px;"></div>
+                </div>
+
+                <div class="${isAdmin ? 'admin-details-grid' : 'details-grid'}" style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div class="${isAdmin ? 'admin-detail-box' : 'detail-box'}" style="padding: 16px;">
+                        <div class="skeleton" style="width: 60px; height: 11px; margin-bottom: 8px;"></div>
+                        <div class="skeleton" style="width: 75%; height: 18px;"></div>
+                    </div>
+                    <div class="${isAdmin ? 'admin-detail-box' : 'detail-box'}" style="padding: 16px;">
+                        <div class="skeleton" style="width: 50px; height: 11px; margin-bottom: 8px;"></div>
+                        <div class="skeleton" style="width: 65%; height: 18px;"></div>
+                    </div>
+                    <div class="${isAdmin ? 'admin-detail-box' : 'detail-box'}" style="padding: 16px;">
+                        <div class="skeleton" style="width: 70px; height: 11px; margin-bottom: 8px;"></div>
+                        <div class="skeleton" style="width: 80%; height: 18px;"></div>
+                    </div>
+                    <div class="${isAdmin ? 'admin-detail-box' : 'detail-box'}" style="padding: 16px;">
+                        <div class="skeleton" style="width: 65px; height: 11px; margin-bottom: 8px;"></div>
+                        <div class="skeleton" style="width: 70%; height: 18px;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="${isAdmin ? 'admin-details-section' : 'details-section'}" style="margin-bottom: 24px;">
+                <div class="skeleton" style="width: 150px; height: 20px; margin-bottom: 16px;"></div>
+                <div class="skeleton skeleton-text" style="width: 100%;"></div>
+                <div class="skeleton skeleton-text" style="width: 95%;"></div>
+                <div class="skeleton skeleton-text" style="width: 60%;"></div>
+            </section>
+
+            <section class="${isAdmin ? 'admin-details-section' : 'details-section'}">
+                <div class="skeleton" style="width: 160px; height: 20px; margin-bottom: 20px;"></div>
+                <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 16px;">
+                    <div class="skeleton skeleton-avatar" style="width: 28px; height: 28px;"></div>
+                    <div style="flex: 1;">
+                        <div class="skeleton" style="width: 30%; height: 15px; margin-bottom: 6px;"></div>
+                        <div class="skeleton" style="width: 20%; height: 12px;"></div>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 16px; align-items: center;">
+                    <div class="skeleton skeleton-avatar" style="width: 28px; height: 28px;"></div>
+                    <div style="flex: 1;">
+                        <div class="skeleton" style="width: 35%; height: 15px; margin-bottom: 6px;"></div>
+                        <div class="skeleton" style="width: 25%; height: 12px;"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    `;
+}
+
+/**
+ * Returns skeleton HTML for recent complaints list in dashboard
+ * @param {number} count
+ * @param {boolean} isAdmin
+ */
+function getRecentComplaintsSkeletonHTML(count = 3, isAdmin = true) {
+    let items = '';
+    for (let i = 0; i < count; i++) {
+        if (isAdmin) {
+            items += `
+                <div class="recent-complaint-card skeleton-card" aria-hidden="true" style="margin-bottom: 12px;">
+                    <div class="recent-complaint-info" style="flex: 1;">
+                        <div class="skeleton skeleton-title" style="width: 55%; height: 18px; margin-bottom: 8px;"></div>
+                        <div class="skeleton" style="width: 40%; height: 12px;"></div>
+                    </div>
+                    <div class="recent-complaint-right" style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
+                        <div class="skeleton" style="width: 120px; height: 12px;"></div>
+                        <div class="skeleton skeleton-badge" style="width: 80px; height: 24px;"></div>
+                    </div>
+                </div>
+            `;
+        } else {
+            items += `
+                <div class="complaint-card skeleton-card" aria-hidden="true" style="margin-bottom: 14px; padding: 18px;">
+                    <div class="complaint-card-header" style="margin-bottom: 10px;">
+                        <div style="flex: 1; max-width: 60%;">
+                            <div class="skeleton skeleton-title" style="width: 65%; height: 18px; margin-bottom: 6px;"></div>
+                            <div class="skeleton" style="width: 35%; height: 12px;"></div>
+                        </div>
+                        <div class="skeleton skeleton-badge" style="width: 80px; height: 24px;"></div>
+                    </div>
+                    <div class="complaint-meta" style="gap: 12px; margin-bottom: 12px;">
+                        <div class="skeleton" style="width: 100px; height: 14px;"></div>
+                        <div class="skeleton" style="width: 90px; height: 14px;"></div>
+                        <div class="skeleton" style="width: 80px; height: 14px;"></div>
+                    </div>
+                    <div class="skeleton skeleton-btn" style="width: 105px; height: 32px;"></div>
+                </div>
+            `;
+        }
+    }
+    return items;
+}
+
+/**
+ * Returns skeleton HTML for notifications page
+ * @param {number} count
+ */
+function getNotificationsSkeletonHTML(count = 4) {
+    let items = '';
+    for (let i = 0; i < count; i++) {
+        items += `
+            <div class="notification-card skeleton-card" aria-hidden="true" style="padding: 18px; margin-bottom: 14px; display: flex; gap: 14px; align-items: flex-start;">
+                <div class="skeleton skeleton-avatar" style="width: 36px; height: 36px;"></div>
+                <div style="flex: 1;">
+                    <div class="skeleton skeleton-title" style="width: 50%; height: 16px; margin-bottom: 8px;"></div>
+                    <div class="skeleton skeleton-text" style="width: 85%;"></div>
+                    <div class="skeleton" style="width: 25%; height: 12px; margin-top: 6px;"></div>
+                </div>
+            </div>
+        `;
+    }
+    return items;
+}
+

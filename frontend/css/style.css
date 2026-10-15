@@ -1197,3 +1197,95 @@ footer {
     color: #e2e8f0 !important;
     font-weight: 600 !important;
 }
+
+/* ==================================================
+   SKELETON LOADING SYSTEM (Light & Dark Themes)
+================================================== */
+@keyframes skeleton-shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.skeleton {
+    background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.8s ease-in-out infinite;
+    border-radius: 6px;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+[data-theme="dark"] .skeleton {
+    background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+    background-size: 200% 100%;
+}
+
+.skeleton-text {
+    height: 14px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.skeleton-title {
+    height: 24px;
+    border-radius: 6px;
+    display: block;
+}
+
+.skeleton-subtitle {
+    height: 14px;
+    border-radius: 4px;
+    display: block;
+}
+
+.skeleton-badge {
+    height: 26px;
+    border-radius: 9999px;
+    display: inline-block;
+}
+
+.skeleton-btn {
+    height: 38px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.skeleton-box {
+    height: 64px;
+    border-radius: 8px;
+    display: block;
+}
+
+.skeleton-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.skeleton-card {
+    pointer-events: none;
+    user-select: none;
+}
+
+.skeleton-card .admin-info-item,
+.skeleton-card .admin-detail-box,
+.skeleton-card .detail-box {
+    border: 1px dashed #cbd5e1 !important;
+    background: #f8fafc !important;
+}
+
+[data-theme="dark"] .skeleton-card .admin-info-item,
+[data-theme="dark"] .skeleton-card .admin-detail-box,
+[data-theme="dark"] .skeleton-card .detail-box {
+    border: 1px dashed #334155 !important;
+    background: #1e293b !important;
+}
+
