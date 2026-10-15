@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { validationResult } = require('express-validator');
 const { Complaint, getDepartmentForCategory } = require('../models/Complaint');
 const Notification = require('../models/Notification');
+const { sendStatusUpdateEmail, sendAdminReplyEmail, sendComplaintConfirmationEmail } = require('../utils/emailService');
 
 // @desc    Submit a new complaint
 // @route   POST /api/complaints
@@ -63,6 +64,12 @@ const createComplaint = async (req, res) => {
 
     const populatedComplaint = await Complaint.findById(savedComplaint._id)
       .populate('student', 'name email studentId registerNumber department phone year');
+
+    // Trigger confirmation email asynchronously (failure-safe)
+    if (populatedComplaint && populatedComplaint.student) {
+      sendComplaintConfirmationEmail(populatedComplaint.student, populatedComplaint)
+        .catch(err => console.error('[EmailTrigger] Confirmation email failed:', err.message));
+    }
 
     return res.status(201).json({
       success: true,
@@ -247,6 +254,12 @@ const updateComplaintStatus = async (req, res) => {
       .populate('statusTimeline.updatedBy', 'name email role')
       .populate('adminResponses.admin', 'name email role');
 
+    // Trigger status update email if student exists and status changed
+    if (updatedComplaint && updatedComplaint.student && prevStatus !== status) {
+      sendStatusUpdateEmail(updatedComplaint.student, updatedComplaint, status, message)
+        .catch(err => console.error('[EmailTrigger] Status update email failed:', err.message));
+    }
+
     return res.status(200).json({
       success: true,
       message: `Complaint status updated to ${status}.`,
@@ -320,6 +333,12 @@ const addAdminResponse = async (req, res) => {
       .populate('student', 'name email studentId registerNumber department phone year')
       .populate('statusTimeline.updatedBy', 'name email role')
       .populate('adminResponses.admin', 'name email role');
+
+    // Trigger admin reply email
+    if (updatedComplaint && updatedComplaint.student) {
+      sendAdminReplyEmail(updatedComplaint.student, updatedComplaint, message.trim())
+        .catch(err => console.error('[EmailTrigger] Admin reply email failed:', err.message));
+    }
 
     return res.status(201).json({
       success: true,
