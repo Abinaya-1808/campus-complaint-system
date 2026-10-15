@@ -36,19 +36,16 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 connectDB();
 
 // Health Check Endpoint
-app.get('/api/health', async (req, res) => {
+app.get('/api/health', (req, res) => {
   const dbStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
-  const emailStatus = await verifyEmailConfig().catch(err => ({ configured: false, error: err.message }));
   res.status(200).json({
     status: 'OK',
     message: 'Campus Complaint System API is running',
     timestamp: new Date().toISOString(),
     database: dbStatus,
     emailService: {
-      configured: isEmailConfigured(),
-      verified: Boolean(emailStatus.verified),
-      user: maskEmail(process.env.EMAIL_USER),
-      error: emailStatus.error || null
+      configured: typeof isEmailConfigured === 'function' ? isEmailConfigured() : false,
+      hasBrevo: Boolean(process.env.BREVO_API_KEY)
     }
   });
 });
