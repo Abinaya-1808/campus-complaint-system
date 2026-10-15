@@ -637,6 +637,9 @@ async function initAdminComplaintDetails() {
  * Message display helper using admin CSS classes
  */
 function showAdminMessage(container, message, type) {
+    if (typeof showToast === "function") {
+        showToast(message.replace(/<[^>]*>?/gm, " "), type, type === "success" ? "Success" : "Notice");
+    }
     if (!container) return;
     const typeClass = type === "success" ? "admin-success-message" : "admin-error-message";
     container.innerHTML = `<div class="admin-update-message ${typeClass}">${message}</div>`;
