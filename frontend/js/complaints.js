@@ -460,75 +460,91 @@ async function initComplaintDetails(currentUser) {
         detailsContent.innerHTML = `
             <a href="my-complaints.html" class="back-btn">← Back to My Complaints</a>
 
-            <div class="details-header">
-                <div>
-                    <h1>${escapeHtml(complaint.title)} ${complaint.isAnonymous ? `<span class="anonymous-badge">🕵️ Anonymous</span>` : ""}</h1>
-                    <div class="details-id">Complaint ID: ${escapeHtml(complaint._id)}</div>
+            <div class="details-wrapper">
+                <div class="details-header">
+                    <div>
+                        <h1>${escapeHtml(complaint.title)} ${complaint.isAnonymous ? `<span class="anonymous-badge">🕵️ Anonymous</span>` : ""}</h1>
+                        <div class="details-id">Complaint ID: ${escapeHtml(complaint._id)}</div>
+                    </div>
+                    <span class="status-badge ${statusClass}">
+                        ${escapeHtml(complaint.status)}
+                    </span>
                 </div>
-                <span class="status-badge ${statusClass}">
-                    ${escapeHtml(complaint.status)}
-                </span>
-            </div>
 
-            <div class="details-section">
-                <h2>Complaint Information</h2>
-                <div class="details-grid">
-                    <div class="detail-item">
-                        <span>Routed Department</span>
-                        <strong style="color: #2563eb;">🏛️ ${escapeHtml(complaint.department || (typeof getDepartmentForCategory === "function" ? getDepartmentForCategory(complaint.category) : "Dean of Student Affairs"))}</strong>
-                    </div>
-                    <div class="detail-item">
-                        <span>Category</span>
-                        <strong>${escapeHtml(complaint.category)}</strong>
-                    </div>
-                    <div class="detail-item">
-                        <span>Priority</span>
-                        <strong>${escapeHtml(complaint.priority)}</strong>
-                    </div>
-                    <div class="detail-item">
-                        <span>Location</span>
-                        <strong>${escapeHtml(complaint.location)}</strong>
-                    </div>
-                    <div class="detail-item">
-                        <span>Submitted</span>
-                        <strong>${createdDate}</strong>
-                    </div>
-                    <div class="detail-item">
-                        <span>Student</span>
-                        <strong>${escapeHtml(studentName)}</strong>
-                    </div>
-                    <div class="detail-item">
-                        <span>Department</span>
-                        <strong>${escapeHtml(studentDept)}</strong>
+                <div class="details-section">
+                    <h2>Complaint Information</h2>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <span>Routed Department</span>
+                            <strong style="color: #2563eb;">🏛️ ${escapeHtml(complaint.department || (typeof getDepartmentForCategory === "function" ? getDepartmentForCategory(complaint.category) : "Dean of Student Affairs"))}</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span>Category</span>
+                            <strong>${escapeHtml(complaint.category)}</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span>Priority</span>
+                            <strong>${escapeHtml(complaint.priority)}</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span>Location</span>
+                            <strong>${escapeHtml(complaint.location)}</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span>Submitted</span>
+                            <strong>${createdDate}</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span>Student</span>
+                            <strong>${escapeHtml(studentName)}</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span>Department</span>
+                            <strong>${escapeHtml(studentDept)}</strong>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="details-section">
-                <h2>Description</h2>
-                <div class="description-box">
-                    ${escapeHtml(complaint.description)}
+                ${complaint.image ? `
+                <div class="details-section">
+                    <h2>Attached Evidence Photo</h2>
+                    <div class="attached-evidence-card" style="margin-top: 0;">
+                        <a href="${complaint.image}" target="_blank" title="Click to view full image in a new tab">
+                            <img src="${complaint.image}" alt="Complaint Evidence Photo" class="attached-evidence-img">
+                        </a>
+                        <p style="font-size: 12px; color: #64748b; margin-top: 6px;">Click the photo to open full size.</p>
+                    </div>
                 </div>
-            </div>
+                ` : ""}
 
-            <div class="details-section">
-                <h2>Status Timeline</h2>
-                <div class="timeline">
-                    ${timelineHTML}
+                <div class="details-section">
+                    <h2>Description</h2>
+                    <div class="description-box">
+                        ${escapeHtml(complaint.description)}
+                    </div>
                 </div>
-            </div>
 
-            <div class="details-section">
-                <h2>Admin Response</h2>
-                ${responseHTML}
-                ${ratingSectionHTML}
-            </div>
-
-            <div class="details-section">
-                <h2>Evidence</h2>
-                <div class="no-response">
-                    No evidence was uploaded. (Server does not currently support file uploads).
+                <div class="details-section">
+                    <h2>Status Timeline</h2>
+                    <div class="timeline">
+                        ${timelineHTML}
+                    </div>
                 </div>
+
+                <div class="details-section">
+                    <h2>Admin Response</h2>
+                    ${responseHTML}
+                    ${ratingSectionHTML}
+                </div>
+
+                ${!complaint.image ? `
+                <div class="details-section">
+                    <h2>Evidence</h2>
+                    <div class="no-response">
+                        No evidence photo was attached with this complaint.
+                    </div>
+                </div>
+                ` : ""}
             </div>
         `;
 
