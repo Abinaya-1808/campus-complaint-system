@@ -8,16 +8,16 @@ function getCleanCredentials() {
 }
 
 function isEmailConfigured() {
+  const brevoKey = (process.env.BREVO_API_KEY || '').trim();
+  if (brevoKey) return true;
   const { user, pass } = getCleanCredentials();
   return Boolean(user && user.length > 0 && pass && pass.length > 0);
 }
 
 function createTransporter() {
-  if (!isEmailConfigured()) {
-    return null;
-  }
-
   const { user, pass } = getCleanCredentials();
+  if (!user || !pass) return null;
+
   const service = process.env.EMAIL_SERVICE ? process.env.EMAIL_SERVICE.trim().toLowerCase().replace(/^['"]+|['"]+$/g, '') : null;
 
   if (service && service === 'gmail') {
@@ -28,7 +28,7 @@ function createTransporter() {
   }
 
   const host = (process.env.EMAIL_HOST || 'smtp.gmail.com').trim().replace(/^['"]+|['"]+$/g, '');
-  const port = parseInt(process.env.EMAIL_PORT, 10) || 465;
+  const port = parseInt(process.env.EMAIL_PORT, 10) || 587;
   const secure = process.env.EMAIL_SECURE === 'true' || port === 465;
 
   return nodemailer.createTransport({
@@ -65,15 +65,57 @@ function maskEmail(email) {
   return `${maskedName}@${domain}`;
 }
 
+/**
+ * Sends email either via Brevo REST API (HTTPS port 443 - zero timeouts on Render)
+ * or via standard Nodemailer SMTP
+ */
 async function sendMail({ to, subject, html, text }) {
-  if (!isEmailConfigured()) {
-    console.log('[EmailService] Email sending skipped: EMAIL_USER or EMAIL_PASS not configured in environment.');
-    return { sent: false, reason: 'not_configured' };
-  }
+  const brevoKey = (process.env.BREVO_API_KEY || '').trim().replace(/^['"]+|['"]+$/g, '');
+  const senderEmail = (process.env.EMAIL_USER || 'sabariabinayakandhasamy@gmail.com').trim().replace(/^['"]+|['"]+$/g, '');
+  const senderName = 'Campus Complaint System';
 
   if (!to || typeof to !== 'string' || !to.includes('@')) {
     console.warn('[EmailService] Email skipped: Invalid recipient address.');
     return { sent: false, reason: 'invalid_recipient' };
+  }
+
+  // Method 1: Brevo REST API over HTTPS (Bypasses all cloud hosting port blocks)
+  if (brevoKey) {
+    try {
+      const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: {
+          'accept': 'application/json',
+          'api-key': brevoKey,
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          sender: { name: senderName, email: senderEmail },
+          to: [{ email: to.trim() }],
+          subject,
+          htmlContent: html,
+          textContent: text
+        })
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (response.ok || response.status === 201) {
+        console.log(`[EmailService] Email delivered via Brevo API to ${maskEmail(to)}. MessageId: ${data.messageId}`);
+        return { sent: true, provider: 'brevo', messageId: data.messageId };
+      } else {
+        console.error(`[EmailService] Brevo API error delivering to ${maskEmail(to)}:`, data);
+        return { sent: false, error: data.message || 'Brevo API error' };
+      }
+    } catch (err) {
+      console.error('[EmailService] Network error during Brevo API send:', err.message);
+    }
+  }
+
+  // Method 2: Standard SMTP fallback
+  if (!isEmailConfigured()) {
+    console.log('[EmailService] Email sending skipped: Neither BREVO_API_KEY nor SMTP credentials configured.');
+    return { sent: false, reason: 'not_configured' };
   }
 
   const currentTransporter = getTransporter();
@@ -107,14 +149,12 @@ async function sendMail({ to, subject, html, text }) {
 }
 
 async function verifyEmailConfig() {
+  const brevoKey = (process.env.BREVO_API_KEY || '').trim().replace(/^['"]+|['"]+$/g, '');
+  if (brevoKey) {
+    return { configured: true, provider: 'brevo_api', verified: true };
+  }
   if (!isEmailConfigured()) {
-    const { user, pass } = getCleanCredentials();
-    return { 
-      configured: false, 
-      hasUser: Boolean(user), 
-      hasPass: Boolean(pass),
-      error: 'EMAIL_USER or EMAIL_PASS not set in environment variables' 
-    };
+    return { configured: false, error: 'No email credentials configured' };
   }
   const currentTransporter = getTransporter();
   if (!currentTransporter) {
@@ -122,9 +162,9 @@ async function verifyEmailConfig() {
   }
   try {
     await currentTransporter.verify();
-    return { configured: true, verified: true };
+    return { configured: true, provider: 'smtp', verified: true };
   } catch (err) {
-    return { configured: true, verified: false, error: err.message };
+    return { configured: true, provider: 'smtp', verified: false, error: err.message };
   }
 }
 
