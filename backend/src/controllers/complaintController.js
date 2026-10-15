@@ -316,10 +316,92 @@ const addAdminResponse = async (req, res) => {
   }
 };
 
+
+// @desc    Submit student resolution rating and feedback
+// @route   POST /api/complaints/:id/feedback
+// @access  Private (Owner student only)
+const submitResolutionFeedback = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid complaint ID format.'
+      });
+    }
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: errors.array()[0].msg,
+        errors: errors.array().map(err => ({ field: err.path, message: err.msg }))
+      });
+    }
+
+    const complaint = await Complaint.findById(id);
+    if (!complaint) {
+      return res.status(404).json({
+        success: false,
+        message: 'Complaint not found.'
+      });
+    }
+
+    // Security check: Only the owning student can rate
+    if (complaint.student.toString() !== req.user._id.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: 'Access denied. You can only rate your own complaints.'
+      });
+    }
+
+    // Verification check: Only resolved complaints can be rated
+    if (complaint.status !== 'Resolved') {
+      return res.status(400).json({
+        success: false,
+        message: 'Feedback can only be submitted for Resolved complaints.'
+      });
+    }
+
+    // Check if already rated
+    if (complaint.rating) {
+      return res.status(400).json({
+        success: false,
+        message: 'Resolution feedback has already been submitted for this complaint.'
+      });
+    }
+
+    const { rating, feedback } = req.body;
+    complaint.rating = Number(rating);
+    complaint.feedback = (feedback && typeof feedback === 'string') ? feedback.trim() : '';
+    complaint.ratedAt = new Date();
+
+    await complaint.save();
+
+    const updatedComplaint = await Complaint.findById(id)
+      .populate('student', 'name email studentId registerNumber department phone year')
+      .populate('statusTimeline.updatedBy', 'name email role')
+      .populate('adminResponses.admin', 'name email role');
+
+    return res.status(200).json({
+      success: true,
+      message: 'Thank you! Your resolution rating and feedback have been recorded.',
+      complaint: updatedComplaint
+    });
+  } catch (error) {
+    console.error('Submit Resolution Feedback Error:', error.message);
+    return res.status(500).json({
+      success: false,
+      message: 'Server error recording resolution feedback.'
+    });
+  }
+};
+
 module.exports = {
   createComplaint,
   getComplaints,
   getComplaintById,
   updateComplaintStatus,
-  addAdminResponse
+  addAdminResponse,
+  submitResolutionFeedback
 };

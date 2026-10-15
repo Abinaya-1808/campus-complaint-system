@@ -498,3 +498,113 @@ main form a:hover {
 .attached-evidence-img:hover {
     transform: scale(1.01);
 }
+
+
+/* ==================================================
+   RESOLUTION RATING & FEEDBACK
+================================================== */
+.resolution-feedback-card {
+    margin-top: 24px;
+    background: #fffbeb;
+    border: 2px solid #fde68a;
+    border-radius: 14px;
+    padding: 22px;
+}
+
+.resolution-feedback-card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #92400e;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.resolution-feedback-card p {
+    color: #78350f;
+    font-size: 14px;
+    margin-bottom: 14px;
+    line-height: 1.5;
+}
+
+.star-rating {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.star-rating .star {
+    font-size: 32px;
+    color: #d1d5db;
+    cursor: pointer;
+    transition: color 0.15s ease, transform 0.15s ease;
+    user-select: none;
+}
+
+.star-rating .star:hover,
+.star-rating .star.hovered,
+.star-rating .star.selected {
+    color: #f59e0b;
+    transform: scale(1.15);
+}
+
+.resolution-feedback-card textarea {
+    width: 100%;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: inherit;
+    font-size: 14px;
+    resize: vertical;
+    outline: none;
+    background: white;
+}
+
+.resolution-feedback-card textarea:focus {
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+}
+
+.submit-rating-btn {
+    margin-top: 12px;
+    background: #f59e0b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.submit-rating-btn:hover {
+    background: #d97706;
+}
+
+.resolution-feedback-card.rated {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+}
+
+.resolution-feedback-card.rated h3 {
+    color: #1e293b;
+}
+
+.stars-display {
+    font-size: 22px;
+    color: #f59e0b;
+    margin-bottom: 6px;
+}
+
+.feedback-text {
+    font-size: 14px;
+    color: #334155 !important;
+    font-style: italic;
+    background: white;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border-left: 4px solid #f59e0b;
+    margin-bottom: 8px !important;
+}

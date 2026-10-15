@@ -334,6 +334,10 @@ async function initComplaintDetails(currentUser) {
                 <a href="my-complaints.html" class="secondary-btn">Back to My Complaints</a>
             </div>
         `;
+
+        // Initialize interactive rating events if unresolved rating card is present
+        initRatingWidget(complaint._id);
+
         return;
     }
 
@@ -407,6 +411,42 @@ async function initComplaintDetails(currentUser) {
             responseHTML = `<div class="no-response">No response from the administration yet.</div>`;
         }
 
+        
+        // Resolution Rating & Feedback Section
+        let ratingSectionHTML = "";
+        if (complaint.status === "Resolved") {
+            if (complaint.rating) {
+                const starsFilled = "★".repeat(complaint.rating);
+                const starsEmpty = "☆".repeat(5 - complaint.rating);
+                const rDate = complaint.ratedAt ? new Date(complaint.ratedAt).toLocaleDateString("en-IN") : "";
+                ratingSectionHTML = `
+                    <div class="resolution-feedback-card rated">
+                        <h3>⭐ Your Resolution Feedback</h3>
+                        <div class="stars-display">${starsFilled}${starsEmpty} <span style="font-size:15px; font-weight:700; color:#475569;">(${complaint.rating}/5 Stars)</span></div>
+                        ${complaint.feedback ? `<p class="feedback-text">"${escapeHtml(complaint.feedback)}"</p>` : ""}
+                        <small style="color: #64748b;">Submitted ${rDate ? "on " + rDate : ""}</small>
+                    </div>
+                `;
+            } else {
+                ratingSectionHTML = `
+                    <div class="resolution-feedback-card" id="ratingCard">
+                        <h3>⭐ Rate This Resolution</h3>
+                        <p>This complaint has been marked <strong>Resolved</strong>. How satisfied are you with the resolution?</p>
+                        <div class="star-rating" id="starRating">
+                            <span class="star" data-val="1">★</span>
+                            <span class="star" data-val="2">★</span>
+                            <span class="star" data-val="3">★</span>
+                            <span class="star" data-val="4">★</span>
+                            <span class="star" data-val="5">★</span>
+                        </div>
+                        <textarea id="feedbackText" placeholder="Share your experience or feedback for the maintenance team (optional)..." rows="3"></textarea>
+                        <div id="ratingError"></div>
+                        <button type="button" id="submitRatingBtn" class="submit-rating-btn">Submit Rating</button>
+                    </div>
+                `;
+            }
+        }
+
         const studentObj = complaint.student || {};
         const studentName = studentObj.name || currentUser.name || "Student";
         const studentDept = studentObj.department || currentUser.department || "-";
@@ -471,6 +511,7 @@ async function initComplaintDetails(currentUser) {
             <div class="details-section">
                 <h2>Admin Response</h2>
                 ${responseHTML}
+                ${ratingSectionHTML}
             </div>
 
             <div class="details-section">
@@ -541,4 +582,76 @@ function initLogoutHandler() {
             window.location.href = "login.html";
         });
     }
+}
+
+function initRatingWidget(complaintId) {
+    const starContainer = document.getElementById("starRating");
+    const submitBtn = document.getElementById("submitRatingBtn");
+    if (!starContainer || !submitBtn) return;
+
+    let selectedRating = 0;
+    const stars = starContainer.querySelectorAll(".star");
+
+    stars.forEach(star => {
+        star.addEventListener("mouseover", function() {
+            const val = parseInt(this.getAttribute("data-val"), 10);
+            stars.forEach(s => {
+                s.classList.toggle("hovered", parseInt(s.getAttribute("data-val"), 10) <= val);
+            });
+        });
+
+        star.addEventListener("mouseout", function() {
+            stars.forEach(s => s.classList.remove("hovered"));
+        });
+
+        star.addEventListener("click", function() {
+            selectedRating = parseInt(this.getAttribute("data-val"), 10);
+            stars.forEach(s => {
+                s.classList.toggle("selected", parseInt(s.getAttribute("data-val"), 10) <= selectedRating);
+            });
+        });
+    });
+
+    submitBtn.addEventListener("click", async function() {
+        const errorEl = document.getElementById("ratingError");
+        const feedbackText = document.getElementById("feedbackText").value.trim();
+        errorEl.innerHTML = "";
+
+        if (selectedRating === 0) {
+            errorEl.innerHTML = '<span style="color: #dc2626; font-size: 13px;">Please select at least 1 star before submitting.</span>';
+            return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting...";
+
+        try {
+            const res = await apiFetch(`/complaints/${complaintId}/feedback`, {
+                method: "POST",
+                body: JSON.stringify({
+                    rating: selectedRating,
+                    feedback: feedbackText
+                })
+            });
+
+            if (res && res.success) {
+                const card = document.getElementById("ratingCard");
+                const starsFilled = "★".repeat(selectedRating);
+                const starsEmpty = "☆".repeat(5 - selectedRating);
+                card.className = "resolution-feedback-card rated";
+                card.innerHTML = `
+                    <h3>⭐ Your Resolution Feedback</h3>
+                    <div class="stars-display">${starsFilled}${starsEmpty} <span style="font-size:15px; font-weight:700; color:#475569;">(${selectedRating}/5 Stars)</span></div>
+                    ${feedbackText ? `<p class="feedback-text">"${escapeHtml(feedbackText)}"</p>` : ""}
+                    <small style="color: #16a34a; font-weight: 600;">✓ Rating submitted successfully!</small>
+                `;
+            } else {
+                throw new Error(res?.message || "Failed to submit rating.");
+            }
+        } catch (err) {
+            errorEl.innerHTML = `<span style="color: #dc2626; font-size: 13px;">${escapeHtml(err.message || "Failed to submit rating.")}</span>`;
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Submit Rating";
+        }
+    });
 }

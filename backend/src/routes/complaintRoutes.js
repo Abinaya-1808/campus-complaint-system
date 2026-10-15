@@ -5,7 +5,8 @@ const {
   getComplaints,
   getComplaintById,
   updateComplaintStatus,
-  addAdminResponse
+  addAdminResponse,
+  submitResolutionFeedback
 } = require('../controllers/complaintController');
 const { protect, authorize } = require('../middleware/authMiddleware');
 const { allowedCategories, allowedPriorities, allowedStatuses } = require('../models/Complaint');
@@ -33,6 +34,14 @@ const updateStatusValidation = [
   body('message').optional().isString().trim()
 ];
 
+
+// Resolution Feedback Validation Rules
+const feedbackValidation = [
+  body('rating').notEmpty().withMessage('Rating is required.')
+    .isInt({ min: 1, max: 5 }).withMessage('Rating must be an integer between 1 and 5.'),
+  body('feedback').optional().isString().trim()
+];
+
 // Admin Response Validation Rules
 const addResponseValidation = [
   body('message').trim().notEmpty().withMessage('Response message is required.')
@@ -43,6 +52,7 @@ router.post('/', protect, authorize('student'), createComplaintValidation, creat
 router.get('/', protect, getComplaints);
 router.get('/:id', protect, getComplaintById);
 router.patch('/:id/status', protect, authorize('admin'), updateStatusValidation, updateComplaintStatus);
+router.post('/:id/feedback', protect, authorize('student'), feedbackValidation, submitResolutionFeedback);
 router.post('/:id/responses', protect, authorize('admin'), addResponseValidation, addAdminResponse);
 
 module.exports = router;

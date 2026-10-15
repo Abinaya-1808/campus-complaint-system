@@ -74,6 +74,20 @@ const complaintSchema = new mongoose.Schema({
     required: [true, 'Complaint description is required'],
     trim: true
   },
+  rating: {
+    type: Number,
+    min: 1,
+    max: 5,
+    default: null
+  },
+  feedback: {
+    type: String,
+    default: ''
+  },
+  ratedAt: {
+    type: Date,
+    default: null
+  },
   image: {
     type: String,
     default: ''

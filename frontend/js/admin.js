@@ -532,6 +532,21 @@ async function initAdminComplaintDetails() {
 
                 <!-- RESPONSES -->
                 ${responsesHTML}
+
+                <!-- STUDENT RESOLUTION RATING -->
+                ${complaint.rating ? `
+                    <section class="admin-details-section">
+                        <h2>Student Resolution Feedback</h2>
+                        <div class="resolution-feedback-card rated" style="margin-top: 0;">
+                            <div class="stars-display" style="font-size: 20px; color: #f59e0b; margin-bottom: 8px;">
+                                ${"★".repeat(complaint.rating)}${"☆".repeat(5 - complaint.rating)} <span style="font-size:15px; font-weight:700; color:#475569;">(${complaint.rating}/5 Stars)</span>
+                            </div>
+                            ${complaint.feedback ? `<p class="feedback-text">"${escapeHtml(complaint.feedback)}"</p>` : '<p style="color: #64748b; font-size: 13px;">Student rated without written comments.</p>'}
+                            <small style="color: #64748b;">Submitted ${complaint.ratedAt ? "on " + new Date(complaint.ratedAt).toLocaleDateString("en-IN") : ""}</small>
+                        </div>
+                    </section>
+                ` : ""}
+
             </div>
         `;
 
