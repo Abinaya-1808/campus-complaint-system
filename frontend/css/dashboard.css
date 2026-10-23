@@ -219,13 +219,160 @@
 }
 
 
-/* RECENT ACTIVITY */
+/* ==================================================
+   RECENT ACTIVITY & COMPLAINT CARDS
+================================================== */
 
 .recent-list {
-    background: white;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 120px;
+}
+
+.complaint-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
     border-radius: 14px;
-    min-height: 220px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    padding: 22px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.complaint-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+.complaint-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.complaint-card-header > div {
+    flex: 1;
+    min-width: 0;
+}
+
+.complaint-card-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 6px 0;
+    line-height: 1.35;
+    word-break: break-word;
+}
+
+.complaint-id {
+    display: block;
+    font-size: 12.5px;
+    color: #64748b;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-weight: 500;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: capitalize;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
+}
+
+.status-pending {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
+
+.status-progress {
+    background: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+}
+
+.status-resolved {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+/* Complaint Meta */
+.complaint-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 24px;
+    padding: 12px 18px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+}
+
+.complaint-meta span {
+    font-size: 13.5px;
+    color: #475569;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.complaint-meta span strong {
+    color: #0f172a;
+    font-weight: 600;
+}
+
+/* Card Footer & View Details Button */
+.complaint-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.view-details-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    font-size: 13.5px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    width: fit-content;
+}
+
+.view-details-btn:hover {
+    background: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+    transform: translateX(3px);
 }
 
 .empty-state {
@@ -389,4 +536,79 @@
 
 [data-theme="dark"] .secondary-btn:hover {
     background: #273549 !important;
+}
+
+/* Dark Mode Enhancements for Recent Activity & Complaints */
+[data-theme="dark"] .recent-list {
+    background: #151c2c !important;
+    border: 1px solid #273549 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .complaint-card {
+    background: #0f172a !important;
+    border: 1px solid #273549 !important;
+    box-shadow: none !important;
+}
+
+[data-theme="dark"] .complaint-card:hover {
+    border-color: #38bdf8 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .complaint-card-header h3 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .complaint-id {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .complaint-meta {
+    background: #151c2c !important;
+    border: 1px solid #273549 !important;
+}
+
+[data-theme="dark"] .complaint-meta span {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .complaint-meta span strong {
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .status-pending {
+    background: #78350f !important;
+    color: #fef3c7 !important;
+    border-color: #92400e !important;
+}
+
+[data-theme="dark"] .status-progress {
+    background: #1e3a8a !important;
+    color: #dbeafe !important;
+    border-color: #1e40af !important;
+}
+
+[data-theme="dark"] .status-resolved {
+    background: #064e3b !important;
+    color: #dcfce7 !important;
+    border-color: #065f46 !important;
+}
+
+[data-theme="dark"] .status-rejected {
+    background: #7f1d1d !important;
+    color: #fee2e2 !important;
+    border-color: #991b1b !important;
+}
+
+[data-theme="dark"] .view-details-btn {
+    background: #1e293b !important;
+    color: #38bdf8 !important;
+    border-color: #334155 !important;
+}
+
+[data-theme="dark"] .view-details-btn:hover {
+    background: #0284c7 !important;
+    color: #ffffff !important;
+    border-color: #0284c7 !important;
 }

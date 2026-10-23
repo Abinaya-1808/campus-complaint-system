@@ -283,7 +283,7 @@ async function initMyComplaints() {
                 <div class="complaint-card-header">
                     <div>
                         <h3>${escapeHtml(complaint.title)} ${complaint.isAnonymous ? `<span class="anonymous-badge">🕵️ Anonymous</span>` : ""}</h3>
-                        <span class="complaint-id">${escapeHtml(complaint._id)}</span>
+                        <span class="complaint-id">Complaint ID: ${escapeHtml(complaint._id)}</span>
                     </div>
                     <span class="status-badge ${statusClass}">
                         ${escapeHtml(complaint.status)}
@@ -297,9 +297,11 @@ async function initMyComplaints() {
                     <span><strong>Date:</strong> ${dateStr}</span>
                 </div>
 
-                <a href="complaint-details.html?id=${encodeURIComponent(complaint._id)}" class="view-details-btn">
-                    View Details →
-                </a>
+                <div class="complaint-card-footer">
+                    <a href="complaint-details.html?id=${encodeURIComponent(complaint._id)}" class="view-details-btn">
+                        View Details →
+                    </a>
+                </div>
             `;
 
             complaintsList.appendChild(card);

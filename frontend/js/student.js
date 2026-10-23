@@ -111,23 +111,25 @@ async function loadComplaintStats() {
 
                     const item = document.createElement("div");
                     item.className = "complaint-card";
-                    item.style.marginBottom = "15px";
                     item.innerHTML = `
                         <div class="complaint-card-header">
                             <div>
                                 <h3>${escapeText(c.title)} ${c.isAnonymous ? '<span class="anonymous-badge">🕵️ Anonymous</span>' : ''}</h3>
-                                <span class="complaint-id">${escapeText(c._id)}</span>
+                                <span class="complaint-id">Complaint ID: ${escapeText(c._id)}</span>
                             </div>
                             <span class="status-badge ${statusClass}">${escapeText(c.status)}</span>
                         </div>
                         <div class="complaint-meta">
                             <span><strong>Category:</strong> ${escapeText(c.category)}</span>
                             <span><strong>Priority:</strong> ${escapeText(c.priority)}</span>
+                            ${c.location ? `<span><strong>Location:</strong> ${escapeText(c.location)}</span>` : ""}
                             <span><strong>Date:</strong> ${dateStr}</span>
                         </div>
-                        <a href="complaint-details.html?id=${encodeURIComponent(c._id)}" class="view-details-btn">
-                            View Details →
-                        </a>
+                        <div class="complaint-card-footer">
+                            <a href="complaint-details.html?id=${encodeURIComponent(c._id)}" class="view-details-btn">
+                                View Details →
+                            </a>
+                        </div>
                     `;
                     recentEl.appendChild(item);
                 });
