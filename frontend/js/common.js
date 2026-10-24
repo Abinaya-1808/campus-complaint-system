@@ -101,6 +101,7 @@ function showToast(message, type = 'success', title = null, duration = 4000) {
 
 // Automatically inject and manage theme toggle button in navbar
 function initThemeToggle() {
+    formatNavbarLogo();
     if (document.getElementById('themeToggleBtn')) return;
 
     const navContainer = document.querySelector('.navbar .nav-links') || 
@@ -577,3 +578,25 @@ function getNotificationsSkeletonHTML(count = 4) {
     return items;
 }
 
+
+/**
+ * Ensures navbar logo has proper SVG and responsive .logo-suffix wrapper
+ */
+function formatNavbarLogo() {
+    const logoEl = document.querySelector('.navbar .logo');
+    if (!logoEl) return;
+
+    if (!logoEl.querySelector('.logo-suffix')) {
+        const text = logoEl.textContent.trim();
+        if (text.includes('Campus Complaint')) {
+            const hasSvg = logoEl.querySelector('svg');
+            const svgHTML = hasSvg ? hasSvg.outerHTML : `
+                <svg class="logo-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                </svg>
+            `;
+            logoEl.innerHTML = `${svgHTML}<span>Campus Complaint<span class="logo-suffix"> System</span></span>`;
+        }
+    }
+}
